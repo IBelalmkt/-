@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>فريق ريسبكت — متطلبات الترقية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0712; --panel:#0f0b1a; --card:#131020; --muted:#a7a4be; --text:#efecff;
+  --brand:#8b7bff; --accent:#ff6b9e; --ok:#54e6a6; --border:1px solid rgba(255,255,255,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1000px 500px at 20% -10%, rgba(139,123,255,.11), transparent), var(--bg); color:var(--text); font-family:"Cairo",sans-serif}
+.container{width:min(1100px,92%);margin:auto}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:10;background:rgba(15,11,26,.7);backdrop-filter:blur(10px);border-bottom:var(--border)}
+.nav-in{display:flex;align-items:center;gap:12px;padding:12px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.brand .logo{width:34px;height:34px;border-radius:10px;background:url('RTHospital.png') center/cover no-repeat;border:1px solid rgba(255,255,255,.1)}
+.btn{padding:10px 12px;border-radius:12px;border:var(--border);background:#1a1531;color:var(--text);font-weight:700;cursor:pointer}
+.btn.ghost{background:#141022}
+
+/* Header */
+.page-hero{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0 8px}
+.page-hero h1{margin:0;font-size:28px}
+.page-hero .sub{color:#cfcbe9}
+
+/* Grid of requirements */
+.grid{display:grid;gap:14px;margin:12px 0 28px}
+@media (min-width: 860px){
+  .grid{grid-template-columns:1fr 1fr 1fr}
+}
+/* Card */
+.card{background:rgba(25,18,38,.6); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; box-shadow:0 8px 28px rgba(139,92,246,.10)}
+.card h3{margin:0 0 8px; font-size:16px}
+.card .to{color:#a0a5c4; font-size:13px; margin-top:-2px}
+.card .points{display:inline-block;margin:8px 0 10px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:#171230; font-weight:800; font-size:12px}
+.card ul{margin:0; padding:0 18px; line-height:1.9}
+.card li{margin:0 0 4px}
+
+/* Footer */
+footer{color:#a5a1c0; text-align:center; padding:18px 0; border-top:var(--border); background:#0f0b1a}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230}
+
+/* Accent marks */
+.hl{color:#ffd166}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-in">
+    <div class="brand"><span class="logo"></span><span>متطلبات الترقية</span></div>
+    <a class="btn ghost" href="./index.html">رجوع للطاقم</a>
+  </div>
+</nav>
+
+<header class="container page-hero">
+  <div>
+    <h1>متطلبات الترقية</h1>
+    <div class="sub">شرح كامل ومبسط حسب كل انتقال رتبي</div>
+  </div>
+  <span class="badge">آخر تحديث • <span id="yy"></span></span>
+</header>
+
+<main class="container">
+  <div class="grid">
+
+    <!-- 1 -->
+    <section class="card">
+      <h3>من <span class="hl">متطوع / متدرب</span> إلى <span class="hl">ممرض</span></h3>
+      <div class="to">الانتقال الأول</div>
+      <span class="points">(70) نقطة</span>
+      <ul>
+        <li>شهادة عمليات.</li>
+        <li>شهادة غوص.</li>
+        <li>شهادة قيادة قارب.</li>
+      </ul>
+    </section>
+
+    <!-- 2 -->
+    <section class="card">
+      <h3>من <span class="hl">ممرض</span> إلى <span class="hl">دكتور مساعد</span></h3>
+      <div class="to">الانتقال الثاني</div>
+      <span class="points">(250) نقطة</span>
+      <ul>
+        <li>شهادة تقرير فحص لياقة.</li>
+      </ul>
+    </section>
+
+    <!-- 3 -->
+    <section class="card">
+      <h3>من <span class="hl">دكتور مساعد</span> إلى <span class="hl">دكتور</span></h3>
+      <div class="to">الانتقال الثالث</div>
+      <span class="points">(500) نقطة</span>
+      <ul>
+        <li>شهادة تقارير.</li>
+        <li>التعامل مع حالات الجبال.</li>
+        <li>قيادة مركبة (بوين) + يُمنع حمل المسقطين فيها إلا في حالة الجبال.</li>
+        <li>إثبات جدارة.</li>
+      </ul>
+    </section>
+
+    <!-- 4 -->
+    <section class="card">
+      <h3>من <span class="hl">دكتور</span> إلى <span class="hl">دكتور أخصائي</span></h3>
+      <div class="to">الانتقال الرابع</div>
+      <span class="points">(800) نقطة</span>
+      <ul>
+        <li>شهادة اختبار بالتخصص.</li>
+        <li>اختبار تقارير بالتخصص.</li>
+        <li>قيادة مركبة (نورس) + يُمنع حمل المسقطين فيها.</li>
+        <li>إثبات جدارة.</li>
+      </ul>
+    </section>
+
+    <!-- 5 -->
+    <section class="card">
+      <h3>من <span class="hl">دكتور أخصائي</span> إلى <span class="hl">دكتور استشاري</span></h3>
+      <div class="to">الانتقال الخامس</div>
+      <span class="points">(1100) نقطة</span>
+      <ul>
+        <li>تقييم ميداني واحترافية.</li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  © <span id="year"></span> فريق ريسبكت — صفحة متطلبات الترقية
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('yy').textContent = new Date().toLocaleDateString('ar-SA');
+</script>
+</body>
+</html>
