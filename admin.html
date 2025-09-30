@@ -140,7 +140,14 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
    
       
 
-        <div class="filter-panel" id="filterPanel">
+       
+
+      <button id="reindexBtn" class="btn">ترقيم الاكواد</button>
+       <!-- زر متطلبات الترقية بشكل chip مثل الرجوع -->
+    <a class="link-chip" href="promotion.html"ico">⬈</span><span>متطلبات الترقية</span></a>
+  <div class="filter-wrap">
+        <button id="openFilters">زر الفلتره</button>
+     <div class="filter-panel" id="filterPanel">
           <div class="filter-row"><label><input type="checkbox" data-r="A" checked> مسؤول</label><span class="count" id="cntA">0</span></div>
           <div class="filter-row"><label><input type="checkbox" data-r="V" checked> نائب</label><span class="count" id="cntV">0</span></div>
           <div class="filter-row"><label><input type="checkbox" data-r="AD" checked> استشاري</label><span class="count" id="cntAD">0</span></div>
@@ -156,12 +163,6 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
           </div>
         </div>
       </div>
-
-      <button id="reindexBtn" class="btn">ترقيم الاكواد</button>
-       <!-- زر متطلبات الترقية بشكل chip مثل الرجوع -->
-    <a class="link-chip" href="promotion.html"ico">⬈</span><span>متطلبات الترقية</span></a>
-  <div class="filter-wrap">
-        <button id="openFilters">زر الفلتره</button>
     </div>
   </div>
 </nav>
@@ -554,4 +555,5 @@ await load();
 </script>
 </body>
 </html>
+
 
