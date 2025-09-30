@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>فريق ريسبكت — الطاقم</title>
+<title>مستشفى ريسبكت</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0a0712; --panel:#0f0b1a; --card:#131020; --muted:#a7a4be; --text:#efecff;
   --brand:#8b7bff; --accent:#ff6b9e; --ok:#54e6a6; --border:1px solid rgba(255,255,255,.08);
+  --cyan:#7fd8ff;
 }
 *{box-sizing:border-box}
 body{margin:0;background:radial-gradient(1000px 500px at 20% -10%, rgba(139,123,255,.11), transparent), var(--bg); color:var(--text); font-family:"Cairo",sans-serif}
@@ -26,22 +27,31 @@ body{margin:0;background:radial-gradient(1000px 500px at 20% -10%, rgba(139,123,
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:20;background:rgba(15,11,26,.7);backdrop-filter:blur(10px);border-bottom:var(--border)}
+nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filter:blur(10px);border-bottom:var(--border)}
 .nav-in{display:flex;align-items:center;gap:12px;padding:12px 0}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800}
 .brand .logo{width:34px;height:34px;border-radius:10px;background:url('RTHospital.png') center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.09) inset}
 .search{flex:1;display:flex;align-items:center;background:#17132c;border:var(--border);border-radius:12px;padding:8px 12px}
 .search input{all:unset;flex:1;color:var(--text);}
-.stat{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#dfe3ff;font-weight:700;font-size:12px}
+.link-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#e9e9ff;text-decoration:none;font-weight:700;font-size:12px}
+.link-chip .ico{font-size:14px;opacity:.85}
+.stat{display:inline-flex;align-items:center;gap:10px;cursor:pointer;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#dfe3ff;font-weight:700;font-size:12px}
 .stat .dot{width:8px;height:8px;border-radius:50%;background:#3be48f;box-shadow:0 0 0 3px rgba(59,228,143,.12)}
 .stat small{opacity:.8;font-weight:600}
 
-/* Filters */
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-.filters .chip{padding:6px 10px;font-size:12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#141122;color:#bfc7dc}
-.filters .chip[aria-pressed="true"]{background:#f5f7ff;color:#120d1f;border-color:transparent}
+/* فلتر بنمط “تطبيق الفلاتر” */
+.filter-wrap{position:relative}
+#openFilters{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#dfe3ff;font-weight:700;font-size:12px;cursor:pointer}
+.filter-panel{
+  position:absolute;right:0;top:42px;width:260px;background:#0f0b1a;border:var(--border);border-radius:14px;padding:10px;display:none;z-index:40
+}
+.filter-panel.open{display:block}
+.filter-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.filter-row label{font-size:13px;color:#d6dcf3}
+.filter-row .count{font-size:12px;color:#9fb0c4;background:#15122a;border:1px solid rgba(255,255,255,.08);padding:2px 8px;border-radius:999px}
+.filter-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
 
-/* ORG */
+/* ORGANIZATION GRID */
 .org{display:grid;gap:18px;margin:16px 0}
 .row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
 .row-A{justify-content:center;margin-top:6px}
@@ -50,69 +60,78 @@ nav{position:sticky;top:0;z-index:20;background:rgba(15,11,26,.7);backdrop-filte
 
 /* CARD */
 .card{position:relative;background:rgba(25,18,38,.6);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;width:260px;box-shadow:0 8px 28px rgba(139,92,246,.10)}
-.card .media{display:grid;place-items:center;padding-top:10px}
+.card .media{display:grid;place-items:center;padding:14px 0 6px}
 .card .avatar{width:88px;height:88px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.1);box-shadow:0 0 0 4px rgba(255,255,255,.05)}
 .card .content{padding:10px 12px;display:grid;gap:6px}
 .card .title{font-size:15px;font-weight:800}
 .card .meta{font-size:12px;color:#aeb6c7;display:grid;gap:2px}
 .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;line-height:1;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#cfd6e6}
-/* ✅ تمييز شهادة الهيلكوبتر */
-.pill.heli{ border-color:#ff4d6d; color:#ff4d6d; background:rgba(255,77,109,.08); }
-
+.pill.heli{border-color:#ff6b6b;color:#ff9aa2;background:rgba(255,107,107,.12)}
 .rank-badge{position:absolute;inset:8px 8px auto auto;background:#281f4e;border:1px solid rgba(255,255,255,.12);color:#fff;padding:4px 8px;border-radius:999px;font-size:12px}
+.health-badge{position:absolute;inset:8px auto auto 8px;background:rgba(127,216,255,.14); color:#bfeaff;border:1px solid rgba(127,216,255,.35);padding:4px 8px;border-radius:999px;font-size:12px}
+
 /* إنذارات – أسفل يسار */
 .warns{position:absolute;bottom:12px;left:12px;display:flex;gap:6px}
 .warns .w{width:8px;height:8px;border-radius:50%;background:#3a3a50;border:1px solid rgba(255,255,255,.12)}
 .warns .w.active{background:#ff9aa9}
+
+/* Mobile */
+@media (max-width: 520px){
+  .card{width:220px}
+  .warns .w{width:6px;height:6px}
+  .rank-badge,.health-badge{font-size:11px;padding:3px 8px}
+  .pill{font-size:10px;padding:5px 8px}
+}
 </style>
 </head>
 <body>
 
 <div id="intro"><div class="intro-box">
   <div class="intro-logo"></div>
-  <div class="intro-title">فريق ريسبكت</div>
-  <div class="intro-sub">الطاقم — عرض عام</div>
+  <div class="intro-title">مستشفى ريسبكت</div>
+  <div class="intro-sub">الطاقم الطبي</div>
 </div></div>
 
 <nav>
   <div class="container nav-in">
-    <div class="brand"><span class="logo"></span><span>إدارة الطاقم</span></div>
-    <div class="search"><input id="searchInput" placeholder="بحث بالاسم أو الرقم الوطني"></div>
-    <div class="stat" id="statTotal"><span class="dot"></span><span>الإجمالي</span><small>— 0</small></div>
-    <a class="btn promote" href="./promotion.html" title="متطلبات الترقية">
-  <!-- أيقونة شارة (SVG خفيف) -->
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M12 2a6 6 0 0 0-3 11.2V22l3-2 3 2v-8.8A6 6 0 0 0 12 2zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>
-  </svg>
-  <span>متطلبات الترقية</span>
-</a>
+    <div class="brand"><span class="logo"></span><span>مستشفى ريسبكت</span></div>
+    <div class="search"><input id="searchInput" placeholder="بحث بالاسم او الرقم الوطني"></div>
 
+    <a class="link-chip" href="promotion.html"><span class="ico">⬈</span><span>متطلبات الترقية</span></a>
+
+    <div class="stat" id="statTotal"><span class="dot"></span><span>الإجمالي</span><small>— 0</small></div>
+
+    <div class="filter-wrap">
+      <button id="openFilters">زر الفلتره</button>
+      <div class="filter-panel" id="filterPanel">
+        <div class="filter-row"><label><input type="checkbox" data-r="A" checked> مسؤول</label><span class="count" id="cntA">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="V" checked> نائب</label><span class="count" id="cntV">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="AD" checked> استشاري</label><span class="count" id="cntAD">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="DS" checked> أخصائي</label><span class="count" id="cntDS">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="D" checked> دكتور</label><span class="count" id="cntD">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="DA" checked> مساعد دكتور</label><span class="count" id="cntDA">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="N" checked> ممرض</label><span class="count" id="cntN">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="T" checked> متدرب</label><span class="count" id="cntT">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="C" checked> متطوع</label><span class="count" id="cntC">0</span></div>
+        <div class="filter-actions">
+          <button id="applyFilters" class="link-chip"><span class="ico">✓</span>تطبيق</button>
+          <button id="resetFilters" class="link-chip"><span class="ico">↺</span>مسح</button>
+        </div>
+      </div>
+    </div>
 
   </div>
 </nav>
 
-<header class="container">
-  <div class="filters">
-    <button class="chip" data-rank="all" aria-pressed="true">الكل</button>
-    <button class="chip" data-rank="A">مسؤول</button>
-    <button class="chip" data-rank="V">نائب</button>
-    <button class="chip" data-rank="AD">استشاري</button>
-    <button class="chip" data-rank="DS">أخصائي</button>
-    <button class="chip" data-rank="D">دكتور</button>
-    <button class="chip" data-rank="DA">مساعد دكتور</button>
-    <button class="chip" data-rank="N">ممرض</button>
-    <button class="chip" data-rank="T">متدرب</button>
-    <button class="chip" data-rank="C">متطوع</button>
-  </div>
-</header>
+<header class="container"></header>
 
 <main class="container">
   <div id="org" class="org"></div>
 </main>
 
 <footer style="text-align:center;padding:18px 0;color:var(--muted);border-top:var(--border);background:#0f0b1a">
-  © <span id="year"></span> فريق ريسبكت
+  © <span id="year"></span> مستفى ريسبكت. جميع الحقوق محفوظة.
 </footer>
 
 <script type="module">
@@ -128,40 +147,61 @@ setTimeout(()=>document.getElementById('intro')?.classList.add('hide-intro'),120
 const rankOrder=['A','V','AD','DS','D','DA','N','T','C'];
 const rankLabel=r=>({A:'مسؤول',V:'نائب',AD:'استشاري',DS:'أخصائي',D:'دكتور',DA:'مساعد دكتور',N:'ممرض',T:'متدرب',C:'متطوع'})[r]||r;
 
-let ALL=[]; let STATE={rank:'all',q:''};
+let ALL=[]; 
+let STATE={ ranks:new Set(rankOrder), q:'' };
 
-const pill=t=>`<span class="pill">${t}</span>`;
+const openFilters = document.getElementById('openFilters');
+const filterPanel = document.getElementById('filterPanel');
+const applyFilters = document.getElementById('applyFilters');
+const resetFilters = document.getElementById('resetFilters');
+
+const pill=(t,cls='')=>`<span class="pill ${cls}">${t}</span>`;
 const warnsHTML=n=> new Array(3).fill(0).map((_,i)=>`<span class="w ${n>i?'active':''}"></span>`).join('');
 const certList=x=>{
-  const a=[]; if(x.cert_heli) a.push('شهادة هيلكوبتر'); if(x.cert_ops) a.push('شهادة عمليات');
-  if(x.cert_diving) a.push('شهادة غوص'); if(x.cert_boat) a.push('شهادة قيادة قارب');
-  if(x.cert_med_report) a.push('شهادة تقارير طبية'); if(x.cert_fitness) a.push('شهادة تقرير فحص لياقة');
-  if(x.test_specialty) a.push('اختبار بالتخصص'); if(x.test_reports) a.push('اختبارات تقارير بالتخصص');
+  const a=[]; 
+  if(x.cert_heli) a.push({t:'شهادة هيلكوبتر', cls:'heli'});
+  if(x.cert_ops) a.push({t:'شهادة عمليات'});
+  if(x.cert_diving) a.push({t:'شهادة غوص'});
+  if(x.cert_boat) a.push({t:'شهادة قيادة قارب'});
+  if(x.cert_med_report) a.push({t:'تقارير طبية'});
+  if(x.cert_fitness) a.push({t:'تقرير فحص لياقة'});
+  if(x.test_specialty) a.push({t:'اختبار بالتخصص'});
+  if(x.test_reports) a.push({t:'اختبارات تقارير'});
+  if(x.test_mountain) a.push({t:'اختبار الجبال'});
   return a;
 };
+
 function cardHTML(x){
-  // ✅ أضف كلاس heli إذا كانت هيلكوبتر
-  const certHTML = certList(x).map(t=>`<span class="pill ${t==='شهادة هيلكوبتر'?'heli':''}">${t}</span>`).join('');
+  const certs = certList(x).map(c=>pill(c.t, c.cls||'')).join('');
+  const health = x.health_role ? `<div class="health-badge">${x.health_role}</div>` : '';
   return `
   <article class="card">
     <div class="rank-badge">${x.rank}-${x.rank_no}</div>
+    ${health}
     <div class="media"><img class="avatar" src="${x.photo||''}" alt="${x.name||''}"></div>
     <div class="content">
       <div class="title">${x.name||'بدون اسم'}</div>
       <div class="meta">
         <div>الرقم الوطني: <b>${x.nid||'—'}</b></div>
         <div>الرتبة: <b>${rankLabel(x.rank)}</b></div>
+        ${x.specialty ? `<div>التخصص: <b>${x.specialty}</b></div>`:''}
       </div>
-      <div class="pills">${certHTML}</div>
+      <div class="pills">${certs}</div>
     </div>
     <div class="warns">${warnsHTML(x.warnings||0)}</div>
   </article>`;
 }
 
+function countByRank(data){
+  const out={}; for(const r of rankOrder) out[r]=0;
+  data.forEach(x=>{ if(out[x.rank]!==undefined) out[x.rank]++; });
+  return out;
+}
+
 function render(){
   const q=STATE.q.trim().toLowerCase();
   let list=ALL.filter(x=>{
-    const okRank=(STATE.rank==='all')?true:x.rank===STATE.rank;
+    const okRank = STATE.ranks.has(x.rank);
     const okQ=!q || x.name?.toLowerCase().includes(q) || x.nid?.includes(q);
     return okRank && okQ;
   });
@@ -175,7 +215,13 @@ function render(){
     <div class="row row-V">${groups.V.map(cardHTML).join('')}</div>
     ${['AD','DS','D','DA','N','T','C'].map(r=>`<div class="row row-${r}">${groups[r].map(cardHTML).join('')}</div>`).join('')}
   `;
-  statTotal.querySelector('small').textContent=`— ${ALL.length}`;
+  statTotal.querySelector('small').textContent=`— ${list.length}`;
+
+  const counts = countByRank(ALL);
+  for(const r of rankOrder){
+    const el = document.getElementById('cnt'+r) || document.getElementById('cnt'+(r==='AD'?'AD':r));
+    if(el) el.textContent = counts[r]||0;
+  }
 }
 
 async function load(){
@@ -185,11 +231,24 @@ async function load(){
 }
 statTotal.onclick=load;
 
-document.querySelectorAll('.chip').forEach(c=>{
-  c.onclick=()=>{document.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed','false'));c.setAttribute('aria-pressed','true');STATE.rank=c.dataset.rank;render();}
-});
-searchInput.oninput=()=>{STATE.q=searchInput.value;render();};
+/* Filters + search */
+document.getElementById('searchInput').oninput=()=>{STATE.q=searchInput.value;render();};
 
+openFilters.onclick=()=>{ filterPanel.classList.toggle('open'); };
+applyFilters.onclick=()=>{
+  const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
+  STATE.ranks = new Set(Array.from(checks).filter(c=>c.checked).map(c=>c.getAttribute('data-r')));
+  filterPanel.classList.remove('open');
+  render();
+};
+resetFilters.onclick=()=>{
+  const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
+  checks.forEach(c=>c.checked=true);
+  STATE.ranks = new Set(rankOrder);
+  render();
+};
+
+/* Realtime */
 sb.channel('staff-rt').on('postgres_changes',{event:'*',schema:'public',table:'staff'},p=>{
   const {eventType,new:NEW,old:OLD}=p;
   if(eventType==='INSERT'){ALL.push(NEW);}
