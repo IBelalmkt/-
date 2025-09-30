@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>فريق ريسبكت — إدارة الطاقم</title>
+<title>ادارة المستشفى</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0a0712; --panel:#0f0b1a; --card:#131020; --muted:#a7a4be; --text:#efecff;
   --brand:#8b7bff; --accent:#ff6b9e; --ok:#54e6a6; --border:1px solid rgba(255,255,255,.08);
+  --cyan:#7fd8ff;
 }
 *{box-sizing:border-box}
 body{margin:0;background:radial-gradient(1000px 500px at 20% -10%, rgba(139,123,255,.11), transparent), var(--bg); color:var(--text); font-family:"Cairo",sans-serif}
@@ -26,26 +27,38 @@ body{margin:0;background:radial-gradient(1000px 500px at 20% -10%, rgba(139,123,
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:20;background:rgba(15,11,26,.7);backdrop-filter:blur(10px);border-bottom:var(--border)}
+nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filter:blur(10px);border-bottom:var(--border)}
 .nav-in{display:flex;align-items:center;gap:12px;padding:12px 0}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800}
 .brand .logo{width:34px;height:34px;border-radius:10px;background:url('RTHospital.png') center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.09) inset}
-.actions{display:flex;gap:8px; margin-inline-start:auto}
+.search{flex:1;display:flex;align-items:center;background:#17132c;border:var(--border);border-radius:12px;padding:8px 12px}
+.search input{all:unset;flex:1;color:var(--text);}
+.actions{display:flex;gap:8px;margin-inline-start:auto}
 .btn{padding:10px 12px;border-radius:12px;border:var(--border);background:#1a1531;color:var(--text);font-weight:700;cursor:pointer}
 .btn.primary{background:#211a48}
 .btn.danger{background:#361b2a}
-.search{flex:1;display:flex;align-items:center;background:#17132c;border:var(--border);border-radius:12px;padding:8px 12px}
-.search input{all:unset;flex:1;color:var(--text);}
+.btn.ghost{background:#171230}
+
+/* زر “متطلبات الترقية” بنفس نمط العودة */
+.link-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#e9e9ff;text-decoration:none;font-weight:700;font-size:12px}
+.link-chip .ico{font-size:14px;opacity:.85}
 
 /* شارة الإجمالي */
 .stat{display:inline-flex;align-items:center;gap:10px;cursor:pointer;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#dfe3ff;font-weight:700;font-size:12px}
 .stat .dot{width:8px;height:8px;border-radius:50%;background:#3be48f;box-shadow:0 0 0 3px rgba(59,228,143,.12)}
 .stat small{opacity:.8;font-weight:600}
 
-/* فلاتر */
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-.filters .chip{padding:6px 10px;font-size:12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#141122;color:#bfc7dc}
-.filters .chip[aria-pressed="true"]{background:#f5f7ff;color:#120d1f;border-color:transparent}
+/* فلتر بنمط “تطبيق الفلاتر” */
+.filter-wrap{position:relative}
+#openFilters{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#dfe3ff;font-weight:700;font-size:12px;cursor:pointer}
+.filter-panel{
+  position:absolute;right:0;top:42px;width:260px;background:#0f0b1a;border:var(--border);border-radius:14px;padding:10px;display:none;z-index:40
+}
+.filter-panel.open{display:block}
+.filter-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.filter-row label{font-size:13px;color:#d6dcf3}
+.filter-row .count{font-size:12px;color:#9fb0c4;background:#15122a;border:1px solid rgba(255,255,255,.08);padding:2px 8px;border-radius:999px}
+.filter-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
 
 /* ORGANIZATION GRID */
 .org{display:grid;gap:18px;margin:16px 0}
@@ -56,18 +69,23 @@ nav{position:sticky;top:0;z-index:20;background:rgba(15,11,26,.7);backdrop-filte
 
 /* CARD */
 .card{position:relative;background:rgba(25,18,38,.6);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;width:260px;box-shadow:0 8px 28px rgba(139,92,246,.10)}
-.card .media{display:grid;place-items:center;padding-top:10px}
+.card .media{display:grid;place-items:center;padding:14px 0 6px}
 .card .avatar{width:88px;height:88px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.1);box-shadow:0 0 0 4px rgba(255,255,255,.05)}
 .card .content{padding:10px 12px;display:grid;gap:6px}
 .card .title{font-size:15px;font-weight:800}
 .card .meta{font-size:12px;color:#aeb6c7;display:grid;gap:2px}
 .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;line-height:1;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#cfd6e6}
-/* ✅ تمييز شهادة الهيلكوبتر */
-.pill.heli{ border-color:#ff4d6d; color:#ff4d6d; background:rgba(255,77,109,.08); }
-
-.card-actions{display:flex;gap:8px;padding:8px 12px;border-top:1px solid rgba(255,255,255,.06);background:#0f0b1a}
+.pill.heli{border-color:#ff6b6b;color:#ff9aa2;background:rgba(255,107,107,.12)} /* هيلكوبتر أحمر */
 .rank-badge{position:absolute;inset:8px 8px auto auto;background:#281f4e;border:1px solid rgba(255,255,255,.12);color:#fff;padding:4px 8px;border-radius:999px;font-size:12px}
+
+/* شارة الصحة (مشرف/مدرب) */
+.health-badge{
+  position:absolute;inset:8px auto auto 8px;
+  background:rgba(127,216,255,.14); color:#bfeaff;
+  border:1px solid rgba(127,216,255,.35);
+  padding:4px 8px;border-radius:999px;font-size:12px
+}
 
 /* إنذارات – أسفل يسار */
 .warns{position:absolute;bottom:12px;left:12px;display:flex;gap:6px}
@@ -91,6 +109,14 @@ textarea{min-height:90px}
 .warn-select .warn-dot{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#1a1531;border:var(--border);color:#cfd4ea;cursor:pointer;user-select:none;font-weight:700;font-size:12px}
 .warn-select .warn-dot.active{background:#2c1f55;box-shadow:0 0 0 1px rgba(139,123,255,.25) inset}
 dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
+
+/* Mobile tweaks */
+@media (max-width: 520px){
+  .card{width:220px}
+  .warns .w{width:6px;height:6px}
+  .rank-badge,.health-badge{font-size:11px;padding:3px 8px}
+  .pill{font-size:10px;padding:5px 8px}
+}
 </style>
 </head>
 <body>
@@ -98,45 +124,51 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
 <!-- Intro -->
 <div id="intro"><div class="intro-box">
   <div class="intro-logo"></div>
-  <div class="intro-title">فريق ريسبكت</div>
-  <div class="intro-sub">لوحة إدارة الطاقم</div>
+  <div class="intro-title">مستشفى ريسبكت</div>
+  <div class="intro-sub">ادارة الطاقم</div>
 </div></div>
 
 <nav>
   <div class="container nav-in">
-    <div class="brand"><span class="logo"></span><span>إدارة الطاقم</span></div>
-    <div class="search"><input id="searchInput" placeholder="بحث بالاسم أو الرقم الوطني"></div>
-    <div class="actions">
-      <button id="addBtn" class="btn primary">إضافة</button>
-      <div class="stat" id="statTotal" title="تحديث"><span class="dot"></span><span>الإجمالي</span><small>— 0</small></div>
-      <button id="reindexBtn" class="btn">إعادة ترقيم الأكواد</button>
-     <a class="btn promote" href="./promotion.html" title="متطلبات الترقية">
-  <!-- أيقونة شارة (SVG خفيف) -->
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M12 2a6 6 0 0 0-3 11.2V22l3-2 3 2v-8.8A6 6 0 0 0 12 2zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>
-  </svg>
-  <span>متطلبات الترقية</span>
-</a>
+    <div class="brand"><span class="logo"></span><span>ادارة المستشفى</span></div>
+    <div class="search"><input id="searchInput" placeholder="بحث بالاسم او الرقم الوطني"></div>
+ 
+      <div class="stat" id="statTotal" title="تحديث"><span class="dot"></span><span>الاجمالي</span><small>0</small></div>
+      <div class="actions">
+        <div class="filter-wrap">
+        <button id="openFilters">زر الفلتره</button>
+      <button id="addBtn" class="btn primary">اضافة</button>
+   
+   
+      
 
+        <div class="filter-panel" id="filterPanel">
+          <div class="filter-row"><label><input type="checkbox" data-r="A" checked> مسؤول</label><span class="count" id="cntA">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="V" checked> نائب</label><span class="count" id="cntV">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="AD" checked> استشاري</label><span class="count" id="cntAD">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="DS" checked> أخصائي</label><span class="count" id="cntDS">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="D" checked> دكتور</label><span class="count" id="cntD">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="DA" checked> مساعد دكتور</label><span class="count" id="cntDA">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="N" checked> ممرض</label><span class="count" id="cntN">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="T" checked> متدرب</label><span class="count" id="cntT">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="C" checked> متطوع</label><span class="count" id="cntC">0</span></div>
+          <div class="filter-actions">
+            <button id="applyFilters" class="btn">تطبيق</button>
+            <button id="resetFilters" class="btn ghost">مسح</button>
+          </div>
+        </div>
+      </div>
+
+      <button id="reindexBtn" class="btn">ترقيم الاكواد</button>
+       <!-- زر متطلبات الترقية بشكل chip مثل الرجوع -->
+    <a class="link-chip" href="promotion.html"ico">⬈</span><span>متطلبات الترقية</span></a>
 
     </div>
   </div>
 </nav>
 
-<header class="container">
-  <div class="filters">
-    <button class="chip" data-rank="all" aria-pressed="true">الكل</button>
-    <button class="chip" data-rank="A">مسؤول</button>
-    <button class="chip" data-rank="V">نائب</button>
-    <button class="chip" data-rank="AD">استشاري</button>
-    <button class="chip" data-rank="DS">أخصائي</button>
-    <button class="chip" data-rank="D">دكتور</button>
-    <button class="chip" data-rank="DA">مساعد دكتور</button>
-    <button class="chip" data-rank="N">ممرض</button>
-    <button class="chip" data-rank="T">متدرب</button>
-    <button class="chip" data-rank="C">متطوع</button>
-  </div>
-</header>
+
+<header class="container"></header>
 
 <main class="container">
   <div id="org" class="org"></div>
@@ -152,7 +184,7 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
       <div style="flex:1">
         <label>الصورة</label>
         <input type="file" id="photo" accept="image/*" />
-        <div style="font-size:12px;color:var(--muted);margin-top:6px">تقدر تسحب-تفلت أو Ctrl+V أثناء فتح النموذج</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:6px">اضافةاو لصق للصورة</div>
       </div>
     </div>
 
@@ -173,17 +205,49 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
       <div><label>رقم التسلسل داخل الرتبة</label><input id="rankNo" type="number" min="1" value="1" required></div>
     </div>
 
+    <div class="row2">
+      <div>
+        <label>الدور الصحي</label>
+        <select id="healthRole">
+          <option value="">— لا يوجد —</option>
+          <option value="مشرف صحة">مشرف صحة</option>
+          <option value="مدرب صحة">مدرب صحة</option>
+        </select>
+      </div>
+      <div>
+        <label>التخصص</label>
+        <select id="specialty">
+          <option value="">— بدون —</option>
+          <option>عيون</option>
+          <option>جراحة عامة</option>
+          <option>عظام</option>
+          <option>قلب</option>
+          <option>مخ وأعصاب</option>
+          <option>أنف وأذن وحنجرة</option>
+          <option>جلدية</option>
+          <option>طوارئ</option>
+          <option>تخدير</option>
+          <option>أشعة</option>
+          <option>مختبر</option>
+          <option>علاج طبيعي</option>
+          <option>تأهيل</option>
+          <option>علم نفس</option>
+        </select>
+      </div>
+    </div>
+
     <fieldset>
-      <legend>الشهادات</legend>
+      <legend>الشهادات / الاختبارات</legend>
       <div class="form-grid">
         <label class="check"><input type="checkbox" id="cert_heli"><span>شهادة هيلكوبتر</span></label>
         <label class="check"><input type="checkbox" id="cert_ops"><span>شهادة عمليات</span></label>
         <label class="check"><input type="checkbox" id="cert_diving"><span>شهادة غوص</span></label>
         <label class="check"><input type="checkbox" id="cert_boat"><span>شهادة قيادة قارب</span></label>
-        <label class="check"><input type="checkbox" id="cert_fitness"><span>شهادة تقرير فحص لياقة</span></label>
-        <label class="check"><input type="checkbox" id="cert_med_report"><span>شهادة تقارير طبية</span></label>
+        <label class="check"><input type="checkbox" id="cert_fitness"><span>تقرير فحص لياقة</span></label>
+        <label class="check"><input type="checkbox" id="cert_med_report"><span>تقارير طبية</span></label>
         <label class="check"><input type="checkbox" id="test_specialty"><span>اختبار بالتخصص</span></label>
         <label class="check"><input type="checkbox" id="test_reports"><span>اختبارات تقارير بالتخصص</span></label>
+        <label class="check"><input type="checkbox" id="test_mountain"><span>اختبار الجبال</span></label>
       </div>
     </fieldset>
 
@@ -206,7 +270,7 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
 </dialog>
 
 <footer style="text-align:center;padding:18px 0;color:var(--muted);border-top:var(--border);background:#0f0b1a">
-  © <span id="year"></span> فريق ريسبكت
+  © <span id="year"></span> مستشفى ريسبكت
 </footer>
 
 <script type="module">
@@ -216,11 +280,30 @@ const SUPABASE_URL = "https://kdsnmgfrdykmupnrmksy.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtkc25tZ2ZyZHlrbXVwbnJta3N5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxNTE2NDgsImV4cCI6MjA3NDcyNzY0OH0.Ly_frv4P1P45OYmTEt6hDThSx5rD6S1a96dNKhVc1Yc";
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+const ADMIN_EMAIL = "belmonster691@gmail.com";
+
 /* Elements */
 const org = document.getElementById('org');
 const statTotal = document.getElementById('statTotal');
 const searchInput = document.getElementById('searchInput');
+const openFilters = document.getElementById('openFilters');
+const filterPanel = document.getElementById('filterPanel');
+const applyFilters = document.getElementById('applyFilters');
+const resetFilters = document.getElementById('resetFilters');
 document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Auth: اطلب كلمة المرور فقط */
+(async ()=>{
+  const { data:{ user } } = await sb.auth.getUser();
+  if(!user){
+    const pwd = prompt('أدخل كلمة مرور الإدارة:');
+    if(!pwd){ location.replace('index.html'); return; }
+    const { error } = await sb.auth.signInWithPassword({ email: ADMIN_EMAIL, password: pwd });
+    if(error){ alert('كلمة المرور غير صحيحة'); location.replace('index.html'); }
+  }
+})();
+
+setTimeout(()=>document.getElementById('intro')?.classList.add('hide-intro'),1200);
 
 const rankOrder = ['A','V','AD','DS','D','DA','N','T','C'];
 const rankLabel = r => ({A:'مسؤول',V:'نائب',AD:'استشاري',DS:'أخصائي',D:'دكتور',DA:'مساعد دكتور',N:'ممرض',T:'متدرب',C:'متطوع'})[r]||r;
@@ -229,14 +312,16 @@ const q = s=>document.querySelector(s);
 const formDialog=q('#formDialog'), form=q('#personForm'), editId=q('#editId');
 const nameInput=q('#name'), nidInput=q('#nid'), rankSelect=q('#rank'), rankNoInput=q('#rankNo');
 const photoInput=q('#photo'), photoPreview=q('#photoPreview'), dropZone=q('#dropZone');
+const healthRole=q('#healthRole'), specialty=q('#specialty');
+
 const cert_heli=q('#cert_heli'), cert_ops=q('#cert_ops'), cert_diving=q('#cert_diving'), cert_boat=q('#cert_boat');
-const cert_med_report=q('#cert_med_report'), cert_fitness=q('#cert_fitness'), test_specialty=q('#test_specialty'), test_reports=q('#test_reports');
+const cert_med_report=q('#cert_med_report'), cert_fitness=q('#cert_fitness'), test_specialty=q('#test_specialty'), test_reports=q('#test_reports'), test_mountain=q('#test_mountain');
+
 const warnSelect=q('#warnSelect'); let currentWarnings=0;
 q('#cancelBtn').onclick=()=>formDialog.close();
 
-let ALL=[]; let STATE={rank:'all', q:''};
-/* Intro hide */
-setTimeout(()=>document.getElementById('intro')?.classList.add('hide-intro'),1200);
+let ALL=[]; 
+let STATE={ ranks:new Set(rankOrder), q:'' };
 
 /* الإنذارات */
 warnSelect.querySelectorAll('.warn-dot').forEach(d=>{
@@ -247,22 +332,24 @@ warnSelect.querySelectorAll('.warn-dot').forEach(d=>{
   };
 });
 
-/* Util */
+/* Helpers */
+const pill = (t, cls='')=>`<span class="pill ${cls}">${t}</span>`;
 const certList = x=>{
   const a=[];
-  if(x.cert_heli) a.push('شهادة هيلكوبتر');
-  if(x.cert_ops) a.push('شهادة عمليات');
-  if(x.cert_diving) a.push('شهادة غوص');
-  if(x.cert_boat) a.push('شهادة قيادة قارب');
-  if(x.cert_med_report) a.push('شهادة تقارير طبية');
-  if(x.cert_fitness) a.push('شهادة تقرير فحص لياقة');
-  if(x.test_specialty) a.push('اختبار بالتخصص');
-  if(x.test_reports) a.push('اختبارات تقارير بالتخصص');
+  if(x.cert_heli) a.push({t:'شهادة هيلكوبتر', cls:'heli'});
+  if(x.cert_ops) a.push({t:'شهادة عمليات'});
+  if(x.cert_diving) a.push({t:'شهادة غوص'});
+  if(x.cert_boat) a.push({t:'شهادة قيادة قارب'});
+  if(x.cert_fitness) a.push({t:'تقرير فحص لياقة'});
+  if(x.cert_med_report) a.push({t:'تقارير طبية'});
+  if(x.test_specialty) a.push({t:'اختبار بالتخصص'});
+  if(x.test_reports) a.push({t:'اختبارات تقارير'});
+  if(x.test_mountain) a.push({t:'اختبار الجبال'});
   return a;
 };
 const warnsHTML = n=> new Array(3).fill(0).map((_,i)=>`<span class="w ${n>i?'active':''}"></span>`).join('');
 
-/* Actions */
+/* Card */
 window.__edit=id=>openForm(ALL.find(x=>x.id===id));
 window.__del=async id=>{
   if(!confirm('تأكيد الحذف؟')) return;
@@ -272,22 +359,24 @@ window.__del=async id=>{
   await load();
 };
 
-/* Card */
 function cardHTML(x){
-  const certHTML = certList(x).map(t=>`<span class="pill ${t==='شهادة هيلكوبتر'?'heli':''}">${t}</span>`).join('');
+  const certs = certList(x).map(c=>pill(c.t, c.cls||'')).join('');
+  const health = x.health_role ? `<div class="health-badge">${x.health_role}</div>` : '';
   return `
   <article class="card">
     <div class="rank-badge">${x.rank}-${x.rank_no}</div>
+    ${health}
     <div class="media"><img class="avatar" src="${x.photo||''}" alt="${x.name||''}"></div>
     <div class="content">
       <div class="title">${x.name||'بدون اسم'}</div>
       <div class="meta">
         <div>الرقم الوطني: <b>${x.nid||'—'}</b></div>
         <div>الرتبة: <b>${rankLabel(x.rank)}</b></div>
+        ${x.specialty ? `<div>التخصص: <b>${x.specialty}</b></div>`:''}
       </div>
-      <div class="pills">${certHTML}</div>
+      <div class="pills">${certs}</div>
     </div>
-    <div class="card-actions">
+    <div class="card-actions" style="display:flex;gap:8px;padding:8px 12px;border-top:1px solid rgba(255,255,255,.06);background:#0f0b1a">
       <button class="btn" onclick="window.__edit('${x.id}')">تعديل</button>
       <button class="btn danger" onclick="window.__del('${x.id}')">حذف</button>
     </div>
@@ -295,15 +384,17 @@ function cardHTML(x){
   </article>`;
 }
 
-/* Render by ranks */
+/* Render rows by rank (A centered, V same level, then others) */
 function render(){
   const qtxt=STATE.q.trim().toLowerCase();
+
   let list=ALL.filter(x=>{
-    const okRank = (STATE.rank==='all')? true : x.rank===STATE.rank;
+    const okRank = STATE.ranks.has(x.rank);
     const okQ = !qtxt || x.name?.toLowerCase().includes(qtxt) || x.nid?.includes(qtxt);
     return okRank && okQ;
   });
 
+  // split by rank & sort inside by rank_no
   const groups = {};
   rankOrder.forEach(r=>groups[r]=[]);
   list.forEach(x=>groups[x.rank]?.push(x));
@@ -318,7 +409,21 @@ function render(){
       </div>`).join('')}
   `;
 
-  statTotal.querySelector('small').textContent = `— ${ALL.length}`;
+  // إجمالي ديناميكي (بعد الفلترة/البحث)
+  statTotal.querySelector('small').textContent = `— ${list.length}`;
+
+  // تحديث عدّادات الفلتر من ALL (الكل) لعرض حجم كل رتبة
+  const counts = countByRank(ALL);
+  for(const r of rankOrder){
+    const el = document.getElementById('cnt'+r) || document.getElementById('cnt'+(r==='AD'?'AD':r));
+    if(el) el.textContent = counts[r]||0;
+  }
+}
+
+function countByRank(data){
+  const out={}; for(const r of rankOrder) out[r]=0;
+  data.forEach(x=>{ if(out[x.rank]!==undefined) out[x.rank]++; });
+  return out;
 }
 
 /* Load */
@@ -330,10 +435,21 @@ async function load(){
 statTotal.onclick=load;
 
 /* Filter & Search */
-document.querySelectorAll('.chip').forEach(c=>{
-  c.onclick=()=>{document.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed','false'));c.setAttribute('aria-pressed','true');STATE.rank=c.dataset.rank;render();}
-});
 searchInput.oninput=()=>{STATE.q=searchInput.value;render();};
+
+openFilters.onclick=()=>{ filterPanel.classList.toggle('open'); };
+applyFilters.onclick=()=>{
+  const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
+  STATE.ranks = new Set(Array.from(checks).filter(c=>c.checked).map(c=>c.getAttribute('data-r')));
+  filterPanel.classList.remove('open');
+  render();
+};
+resetFilters.onclick=()=>{
+  const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
+  checks.forEach(c=>c.checked=true);
+  STATE.ranks = new Set(rankOrder);
+  render();
+};
 
 /* Dialog helpers */
 function openForm(item){
@@ -343,10 +459,12 @@ function openForm(item){
   if(item){
     editId.value=item.id; nameInput.value=item.name||''; nidInput.value=item.nid||'';
     rankSelect.value=item.rank||'A'; rankNoInput.value=item.rank_no||1; photoPreview.src=item.photo||'';
+    healthRole.value=item.health_role||'';
+    specialty.value=item.specialty||'';
     cert_heli.checked=!!item.cert_heli; cert_ops.checked=!!item.cert_ops; cert_diving.checked=!!item.cert_diving; cert_boat.checked=!!item.cert_boat;
-    cert_med_report.checked=!!item.cert_med_report; cert_fitness.checked=!!item.cert_fitness; test_specialty.checked=!!item.test_specialty; test_reports.checked=!!item.test_reports;
+    cert_med_report.checked=!!item.cert_med_report; cert_fitness.checked=!!item.cert_fitness; test_specialty.checked=!!item.test_specialty; test_reports.checked=!!item.test_reports; test_mountain.checked=!!item.test_mountain;
     currentWarnings=item.warnings||0; for(let i=0;i<=currentWarnings;i++) warnSelect.querySelector(`[data-v="${i}"]`)?.classList.add('active');
-    (document.querySelector('#notes')||{}).value = item.notes||'';
+    (q('#notes')).value=item.notes||'';
   }
   formDialog.showModal();
 }
@@ -365,7 +483,7 @@ photoInput.onchange=()=>{ const f=photoInput.files?.[0]; if(f) handleFile(f); };
 function handleFile(file){ const fr=new FileReader(); fr.onload=()=>{photoPreview.src=fr.result}; fr.readAsDataURL(file); }
 const fileToDataUrl=f=>new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.onerror=rej;fr.readAsDataURL(f);});
 
-/* Save + reindex */
+/* Save (with auto reindex) */
 form.onsubmit=async e=>{
   e.preventDefault();
   let photoData = photoPreview.src || '';
@@ -381,13 +499,17 @@ form.onsubmit=async e=>{
     rank: rankSelect.value,
     rank_no: parseInt(rankNoInput.value,10)||1,
     photo: photoData,
+    health_role: healthRole.value || '',
+    specialty: specialty.value || '',
+
     cert_heli: !!cert_heli.checked, cert_ops: !!cert_ops.checked, cert_diving: !!cert_diving.checked, cert_boat: !!cert_boat.checked,
-    cert_med_report: !!cert_med_report.checked, cert_fitness: !!cert_fitness.checked, test_specialty: !!test_specialty.checked, test_reports: !!test_reports.checked,
+    cert_med_report: !!cert_med_report.checked, cert_fitness: !!cert_fitness.checked, test_specialty: !!test_specialty.checked, test_reports: !!test_reports.checked, test_mountain: !!test_mountain.checked,
+
     warnings: currentWarnings,
-    notes: (document.querySelector('#notes')?.value||'').trim()
+    notes: (q('#notes')?.value||'').trim()
   };
 
-  const {error} = await sb.from('staff').upsert(obj);
+  const {error} = await sb.from('staff').upsert(obj); // بدون onConflict — أنت تصلح التكرار يدويًا
   if(error){ alert('فشل الحفظ: '+error.message); return; }
 
   await Promise.all([
@@ -403,7 +525,8 @@ form.onsubmit=async e=>{
 async function reorderRank(rankCode){
   const {data,error}=await sb.from('staff').select('id,rank,rank_no').eq('rank',rankCode);
   if(error||!data) return;
-  data.sort((a,b)=>(a.rank_no||0)-(b.rank_no||0) || (a.id>b.id?1:-1));
+  // رتّب حسب rank_no ثم id للاستقرار
+  data.sort((a,b)=> (a.rank_no||0)-(b.rank_no||0) || (a.id>b.id?1:-1));
   let i=1;
   for(const rec of data){
     if(rec.rank_no!==i){
@@ -418,12 +541,6 @@ document.getElementById('reindexBtn').onclick = async ()=>{
   for(const r of rankOrder){ await reorderRank(r); }
   await load();
 };
-
-/* Filter & Search */
-document.querySelectorAll('.chip').forEach(c=>{
-  c.onclick=()=>{document.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed','false'));c.setAttribute('aria-pressed','true');STATE.rank=c.dataset.rank;render();}
-});
-searchInput.oninput=()=>{STATE.q=searchInput.value;render();};
 
 /* Realtime */
 sb.channel('staff-rt').on('postgres_changes',{event:'*',schema:'public',table:'staff'},p=>{
