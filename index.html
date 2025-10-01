@@ -39,12 +39,13 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 .stat .dot{width:8px;height:8px;border-radius:50%;background:#3be48f;box-shadow:0 0 0 3px rgba(59,228,143,.12)}
 .stat small{opacity:.8;font-weight:600}
 
-/* فلتر بنمط “تطبيق الفلاتر” */
+/* زر الفلترة بصورة */
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;border:var(--border);background:#171230;cursor:pointer}
+.icon-btn img{width:22px;height:22px;filter:invert(1)}
+
+/* فلتر */
 .filter-wrap{position:relative}
-#openFilters{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#dfe3ff;font-weight:700;font-size:12px;cursor:pointer}
-.filter-panel{
-  position:absolute;right:0;top:42px;width:260px;background:#0f0b1a;border:var(--border);border-radius:14px;padding:10px;display:none;z-index:40
-}
+.filter-panel{position:absolute;right:0;top:42px;width:260px;background:#0f0b1a;border:var(--border);border-radius:14px;padding:10px;display:none;z-index:40}
 .filter-panel.open{display:block}
 .filter-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
 .filter-row label{font-size:13px;color:#d6dcf3}
@@ -71,7 +72,7 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 .rank-badge{position:absolute;inset:8px 8px auto auto;background:#281f4e;border:1px solid rgba(255,255,255,.12);color:#fff;padding:4px 8px;border-radius:999px;font-size:12px}
 .health-badge{position:absolute;inset:8px auto auto 8px;background:rgba(127,216,255,.14); color:#bfeaff;border:1px solid rgba(127,216,255,.35);padding:4px 8px;border-radius:999px;font-size:12px}
 
-/* إنذارات – أسفل يسار */
+/* إنذارات */
 .warns{position:absolute;bottom:12px;left:12px;display:flex;gap:6px}
 .warns .w{width:8px;height:8px;border-radius:50%;background:#3a3a50;border:1px solid rgba(255,255,255,.12)}
 .warns .w.active{background:#ff9aa9}
@@ -103,24 +104,29 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
     <div class="stat" id="statTotal"><span class="dot"></span><span>الإجمالي</span><small>— 0</small></div>
 
     <div class="filter-wrap">
-      <button id="openFilters">زر الفلتره</button>
+      <!-- زر بصورة setting.png -->
+      <button id="openFilters" class="icon-btn" aria-label="فلترة">
+        <img src="setting.png" alt="فلترة">
+      </button>
+
       <div class="filter-panel" id="filterPanel">
-        <div class="filter-row"><label><input type="checkbox" data-r="A" checked> مسؤول</label><span class="count" id="cntA">0</span></div>
-        <div class="filter-row"><label><input type="checkbox" data-r="V" checked> نائب</label><span class="count" id="cntV">0</span></div>
-        <div class="filter-row"><label><input type="checkbox" data-r="AD" checked> استشاري</label><span class="count" id="cntAD">0</span></div>
-        <div class="filter-row"><label><input type="checkbox" data-r="DS" checked> أخصائي</label><span class="count" id="cntDS">0</span></div>
-        <div class="filter-row"><label><input type="checkbox" data-r="D" checked> دكتور</label><span class="count" id="cntD">0</span></div>
-        <div class="filter-row"><label><input type="checkbox" data-r="DA" checked> مساعد دكتور</label><span class="count" id="cntDA">0</span></div>
-        <div class="filter-row"><label><input type="checkbox" data-r="N" checked> ممرض</label><span class="count" id="cntN">0</span></div>
-        <div class="filter-row"><label><input type="checkbox" data-r="T" checked> متدرب</label><span class="count" id="cntT">0</span></div>
-        <div class="filter-row"><label><input type="checkbox" data-r="C" checked> متطوع</label><span class="count" id="cntC">0</span></div>
+        <!-- مبدئيًا غير محدد؛ العرض سيكون الكل إذا لم تُحدَّد أي رتبة -->
+        <div class="filter-row"><label><input type="checkbox" data-r="A"> مسؤول</label><span class="count" id="cntA">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="V"> نائب</label><span class="count" id="cntV">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="AD"> استشاري</label><span class="count" id="cntAD">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="DS"> أخصائي</label><span class="count" id="cntDS">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="D"> دكتور</label><span class="count" id="cntD">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="DA"> مساعد دكتور</label><span class="count" id="cntDA">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="N"> ممرض</label><span class="count" id="cntN">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="T"> متدرب</label><span class="count" id="cntT">0</span></div>
+        <div class="filter-row"><label><input type="checkbox" data-r="C"> متطوع</label><span class="count" id="cntC">0</span></div>
+
         <div class="filter-actions">
-          <button id="applyFilters" class="link-chip"><span class="ico">✓</span>تطبيق</button>
-          <button id="resetFilters" class="link-chip"><span class="ico">↺</span>مسح</button>
+          <button id="applyFilters" class="link-chip" type="button"><span class="ico">✓</span>تطبيق</button>
+          <button id="resetFilters" class="link-chip" type="button"><span class="ico">↺</span>مسح</button>
         </div>
       </div>
     </div>
-
   </div>
 </nav>
 
@@ -148,6 +154,7 @@ const rankOrder=['A','V','AD','DS','D','DA','N','T','C'];
 const rankLabel=r=>({A:'مسؤول',V:'نائب',AD:'استشاري',DS:'أخصائي',D:'دكتور',DA:'مساعد دكتور',N:'ممرض',T:'متدرب',C:'متطوع'})[r]||r;
 
 let ALL=[]; 
+// مبدئيًا نعرض الكل (حتى لو الشيكبوكس غير محدد)
 let STATE={ ranks:new Set(rankOrder), q:'' };
 
 const openFilters = document.getElementById('openFilters');
@@ -201,7 +208,8 @@ function countByRank(data){
 function render(){
   const q=STATE.q.trim().toLowerCase();
   let list=ALL.filter(x=>{
-    const okRank = STATE.ranks.has(x.rank);
+    // لو ما في تحديد -> نعرض الكل
+    const okRank = STATE.ranks.size ? STATE.ranks.has(x.rank) : true;
     const okQ=!q || x.name?.toLowerCase().includes(q) || x.nid?.includes(q);
     return okRank && okQ;
   });
@@ -234,21 +242,34 @@ statTotal.onclick=load;
 /* Filters + search */
 document.getElementById('searchInput').oninput=()=>{STATE.q=searchInput.value;render();};
 
-openFilters.onclick=()=>{ filterPanel.classList.toggle('open'); };
+/* فتح/إغلاق اللوحة */
+openFilters.onclick=(e)=>{ e.stopPropagation(); filterPanel.classList.toggle('open'); };
+
+/* تطبيق: ما نقفل اللوحة */
 applyFilters.onclick=()=>{
   const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
-  STATE.ranks = new Set(Array.from(checks).filter(c=>c.checked).map(c=>c.getAttribute('data-r')));
-  filterPanel.classList.remove('open');
-  render();
-};
-resetFilters.onclick=()=>{
-  const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
-  checks.forEach(c=>c.checked=true);
-  STATE.ranks = new Set(rankOrder);
+  const selected = Array.from(checks).filter(c=>c.checked).map(c=>c.getAttribute('data-r'));
+  STATE.ranks = new Set(selected.length ? selected : []); // فاضي => عرض الكل
   render();
 };
 
-/* Realtime */
+/* مسح: إلغاء كل التحديد وإبقاء العرض (كل) */
+resetFilters.onclick=()=>{
+  const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
+  checks.forEach(c=>c.checked=false);
+  STATE.ranks = new Set(); // فارغ => عرض الكل
+  render();
+};
+
+/* إغلاق عند الضغط خارج البطاقة */
+document.addEventListener('click', (e)=>{
+  const withinPanel = filterPanel.contains(e.target);
+  const onButton = openFilters.contains(e.target);
+  if(filterPanel.classList.contains('open') && !withinPanel && !onButton){
+    filterPanel.classList.remove('open');
+  }
+});
+
 sb.channel('staff-rt').on('postgres_changes',{event:'*',schema:'public',table:'staff'},p=>{
   const {eventType,new:NEW,old:OLD}=p;
   if(eventType==='INSERT'){ALL.push(NEW);}
