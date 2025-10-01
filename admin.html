@@ -39,7 +39,7 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 .btn.danger{background:#361b2a}
 .btn.ghost{background:#171230}
 
-/* زر “متطلبات الترقية” بنفس نمط العودة */
+/* زر chip */
 .link-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#e9e9ff;text-decoration:none;font-weight:700;font-size:12px}
 .link-chip .ico{font-size:14px;opacity:.85}
 
@@ -48,12 +48,13 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 .stat .dot{width:8px;height:8px;border-radius:50%;background:#3be48f;box-shadow:0 0 0 3px rgba(59,228,143,.12)}
 .stat small{opacity:.8;font-weight:600}
 
-/* فلتر بنمط “تطبيق الفلاتر” */
+/* زر الفلترة بصورة */
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;border:var(--border);background:#171230;cursor:pointer}
+.icon-btn img{width:22px;height:22px;filter:invert(1)}
+
+/* فلتر */
 .filter-wrap{position:relative}
-#openFilters{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#dfe3ff;font-weight:700;font-size:12px;cursor:pointer}
-.filter-panel{
-  position:absolute;right:0;top:42px;width:260px;background:#0f0b1a;border:var(--border);border-radius:14px;padding:10px;display:none;z-index:40
-}
+.filter-panel{position:absolute;right:0;top:42px;width:260px;background:#0f0b1a;border:var(--border);border-radius:14px;padding:10px;display:none;z-index:40}
 .filter-panel.open{display:block}
 .filter-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
 .filter-row label{font-size:13px;color:#d6dcf3}
@@ -79,20 +80,15 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 .pill.heli{border-color:#ff6b6b;color:#ff9aa2;background:rgba(255,107,107,.12)} /* هيلكوبتر أحمر */
 .rank-badge{position:absolute;inset:8px 8px auto auto;background:#281f4e;border:1px solid rgba(255,255,255,.12);color:#fff;padding:4px 8px;border-radius:999px;font-size:12px}
 
-/* شارة الصحة (مشرف/مدرب) */
-.health-badge{
-  position:absolute;inset:8px auto auto 8px;
-  background:rgba(127,216,255,.14); color:#bfeaff;
-  border:1px solid rgba(127,216,255,.35);
-  padding:4px 8px;border-radius:999px;font-size:12px
-}
+/* شارة الصحة */
+.health-badge{position:absolute;inset:8px auto auto 8px;background:rgba(127,216,255,.14); color:#bfeaff;border:1px solid rgba(127,216,255,.35);padding:4px 8px;border-radius:999px;font-size:12px}
 
-/* إنذارات – أسفل يسار */
+/* إنذارات */
 .warns{position:absolute;bottom:12px;left:12px;display:flex;gap:6px}
 .warns .w{width:8px;height:8px;border-radius:50%;background:#3a3a50;border:1px solid rgba(255,255,255,.12)}
 .warns .w.active{background:#ff9aa9}
 
-/* Dialog (أصغر ومنظم) */
+/* Dialog */
 dialog{border:none;border-radius:16px;background:#120d1f;color:var(--text);width:min(720px,94%);max-height:90vh;padding:16px}
 fieldset{border:var(--border);border-radius:14px;padding:14px;margin:8px 0 14px}
 legend{color:var(--muted);font-size:13px;padding:0 6px}
@@ -132,22 +128,21 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
   <div class="container nav-in">
     <div class="brand"><span class="logo"></span><span>ادارة المستشفى</span></div>
     <div class="search"><input id="searchInput" placeholder="بحث بالاسم او الرقم الوطني"></div>
- 
-      <div class="stat" id="statTotal" title="تحديث"><span class="dot"></span><span>الاجمالي</span><small>0</small></div>
-      <div class="actions">
+
+    <div class="stat" id="statTotal" title="تحديث"><span class="dot"></span><span>الاجمالي</span><small>0</small></div>
+
+    <div class="actions">
       <button id="addBtn" class="btn primary">اضافة</button>
-   
-   
-      
-
-       
-
       <button id="reindexBtn" class="btn">تحديث الاكواد</button>
-       <!-- زر متطلبات الترقية بشكل chip مثل الرجوع -->
-    <a class="link-chip" href="promotion.html"ico">⬈</span><span>متطلبات الترقية</span></a>
-  <div class="filter-wrap">
-        <button id="openFilters">الفلتر</button>
-     <div class="filter-panel" id="filterPanel">
+      <a class="link-chip" href="promotion.html"><span class="ico">⬈</span><span>متطلبات الترقية</span></a>
+
+      <div class="filter-wrap">
+        <!-- زر بصورة setting.png -->
+        <button id="openFilters" class="icon-btn" aria-label="فلترة">
+          <img src="setting.png" alt="فلترة">
+        </button>
+
+        <div class="filter-panel" id="filterPanel">
           <div class="filter-row"><label><input type="checkbox" data-r="A" checked> مسؤول</label><span class="count" id="cntA">0</span></div>
           <div class="filter-row"><label><input type="checkbox" data-r="V" checked> نائب</label><span class="count" id="cntV">0</span></div>
           <div class="filter-row"><label><input type="checkbox" data-r="AD" checked> استشاري</label><span class="count" id="cntAD">0</span></div>
@@ -157,16 +152,17 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
           <div class="filter-row"><label><input type="checkbox" data-r="N" checked> ممرض</label><span class="count" id="cntN">0</span></div>
           <div class="filter-row"><label><input type="checkbox" data-r="T" checked> متدرب</label><span class="count" id="cntT">0</span></div>
           <div class="filter-row"><label><input type="checkbox" data-r="C" checked> متطوع</label><span class="count" id="cntC">0</span></div>
+
+          <!-- أزرار chip مثل الاندكس -->
           <div class="filter-actions">
-            <button id="applyFilters" class="btn">تطبيق</button>
-            <button id="resetFilters" class="btn ghost">مسح</button>
+            <button id="applyFilters" class="link-chip" type="button"><span class="ico">✓</span>تطبيق</button>
+            <button id="resetFilters" class="link-chip" type="button"><span class="ico">↺</span>مسح</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </nav>
-
 
 <header class="container"></header>
 
@@ -246,7 +242,7 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
         <label class="check"><input type="checkbox" id="cert_fitness"><span>تقرير فحص لياقة</span></label>
         <label class="check"><input type="checkbox" id="cert_med_report"><span>تقارير طبية</span></label>
         <label class="check"><input type="checkbox" id="test_specialty"><span>اختبار بالتخصص</span></label>
-        <label class="check"><input type="checkbox" id="test_reports"><span>اختبارات تقارير بالتخصص</span></label>
+        <label class="check"><input type="checkbox" id="test_reports"><span>اختبارات تقارير</span></label>
         <label class="check"><input type="checkbox" id="test_mountain"><span>اختبار الجبال</span></label>
       </div>
     </fieldset>
@@ -290,6 +286,7 @@ const openFilters = document.getElementById('openFilters');
 const filterPanel = document.getElementById('filterPanel');
 const applyFilters = document.getElementById('applyFilters');
 const resetFilters = document.getElementById('resetFilters');
+const formDialog = document.getElementById('formDialog');
 document.getElementById('year').textContent = new Date().getFullYear();
 
 /* Auth: اطلب كلمة المرور فقط */
@@ -309,7 +306,7 @@ const rankOrder = ['A','V','AD','DS','D','DA','N','T','C'];
 const rankLabel = r => ({A:'مسؤول',V:'نائب',AD:'استشاري',DS:'أخصائي',D:'دكتور',DA:'مساعد دكتور',N:'ممرض',T:'متدرب',C:'متطوع'})[r]||r;
 
 const q = s=>document.querySelector(s);
-const formDialog=q('#formDialog'), form=q('#personForm'), editId=q('#editId');
+const form = q('#personForm'), editId=q('#editId');
 const nameInput=q('#name'), nidInput=q('#nid'), rankSelect=q('#rank'), rankNoInput=q('#rankNo');
 const photoInput=q('#photo'), photoPreview=q('#photoPreview'), dropZone=q('#dropZone');
 const healthRole=q('#healthRole'), specialty=q('#specialty');
@@ -384,19 +381,16 @@ function cardHTML(x){
   </article>`;
 }
 
-/* Render rows by rank (A centered, V same level, then others) */
+/* Render */
 function render(){
   const qtxt=STATE.q.trim().toLowerCase();
-
   let list=ALL.filter(x=>{
     const okRank = STATE.ranks.has(x.rank);
     const okQ = !qtxt || x.name?.toLowerCase().includes(qtxt) || x.nid?.includes(qtxt);
     return okRank && okQ;
   });
 
-  // split by rank & sort inside by rank_no
-  const groups = {};
-  rankOrder.forEach(r=>groups[r]=[]);
+  const groups = {}; rankOrder.forEach(r=>groups[r]=[]);
   list.forEach(x=>groups[x.rank]?.push(x));
   rankOrder.forEach(r=>groups[r].sort((a,b)=>(a.rank_no||0)-(b.rank_no||0)));
 
@@ -409,10 +403,8 @@ function render(){
       </div>`).join('')}
   `;
 
-  // إجمالي ديناميكي (بعد الفلترة/البحث)
   statTotal.querySelector('small').textContent = `— ${list.length}`;
 
-  // تحديث عدّادات الفلتر من ALL (الكل) لعرض حجم كل رتبة
   const counts = countByRank(ALL);
   for(const r of rankOrder){
     const el = document.getElementById('cnt'+r) || document.getElementById('cnt'+(r==='AD'?'AD':r));
@@ -434,24 +426,36 @@ async function load(){
 }
 statTotal.onclick=load;
 
-/* Filter & Search */
+/* Search */
 searchInput.oninput=()=>{STATE.q=searchInput.value;render();};
 
-openFilters.onclick=()=>{ filterPanel.classList.toggle('open'); };
-applyFilters.onclick=()=>{
+/* فلتر: زر يفتح/يقفل فقط، اختيار الشيكبوكس لا يغلق اللوحة */
+openFilters.onclick=(e)=>{ e.stopPropagation(); filterPanel.classList.toggle('open'); };
+applyFilters.onclick=()=>{ 
   const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
   STATE.ranks = new Set(Array.from(checks).filter(c=>c.checked).map(c=>c.getAttribute('data-r')));
-  filterPanel.classList.remove('open');
-  render();
+  render(); // لا نغلق اللوحة حسب طلبك
 };
-resetFilters.onclick=()=>{
+resetFilters.onclick=()=>{ 
   const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
   checks.forEach(c=>c.checked=true);
   STATE.ranks = new Set(rankOrder);
   render();
 };
 
-/* Dialog helpers */
+/* إغلاق عند الضغط خارج البطاقة/المودال */
+document.addEventListener('click', (e)=>{
+  const withinPanel = filterPanel.contains(e.target);
+  const onButton = openFilters.contains(e.target);
+  if(filterPanel.classList.contains('open') && !withinPanel && !onButton){
+    filterPanel.classList.remove('open');
+  }
+});
+formDialog.addEventListener('click', (e)=>{
+  if(e.target === formDialog) formDialog.close();
+});
+
+/* فورم الإضافة/التعديل */
 function openForm(item){
   form.reset(); photoPreview.src=''; editId.value=''; currentWarnings=0;
   warnSelect.querySelectorAll('.warn-dot').forEach(x=>x.classList.remove('active'));
@@ -459,8 +463,7 @@ function openForm(item){
   if(item){
     editId.value=item.id; nameInput.value=item.name||''; nidInput.value=item.nid||'';
     rankSelect.value=item.rank||'A'; rankNoInput.value=item.rank_no||1; photoPreview.src=item.photo||'';
-    healthRole.value=item.health_role||'';
-    specialty.value=item.specialty||'';
+    healthRole.value=item.health_role||''; specialty.value=item.specialty||'';
     cert_heli.checked=!!item.cert_heli; cert_ops.checked=!!item.cert_ops; cert_diving.checked=!!item.cert_diving; cert_boat.checked=!!item.cert_boat;
     cert_med_report.checked=!!item.cert_med_report; cert_fitness.checked=!!item.cert_fitness; test_specialty.checked=!!item.test_specialty; test_reports.checked=!!item.test_reports; test_mountain.checked=!!item.test_mountain;
     currentWarnings=item.warnings||0; for(let i=0;i<=currentWarnings;i++) warnSelect.querySelector(`[data-v="${i}"]`)?.classList.add('active');
@@ -470,7 +473,7 @@ function openForm(item){
 }
 document.getElementById('addBtn').onclick=()=>openForm();
 
-/* paste/drag */
+/* لصق/سحب صورة */
 document.addEventListener("paste",e=>{
   if(!formDialog.open) return;
   const it=e.clipboardData?.items||[];
@@ -483,7 +486,7 @@ photoInput.onchange=()=>{ const f=photoInput.files?.[0]; if(f) handleFile(f); };
 function handleFile(file){ const fr=new FileReader(); fr.onload=()=>{photoPreview.src=fr.result}; fr.readAsDataURL(file); }
 const fileToDataUrl=f=>new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.onerror=rej;fr.readAsDataURL(f);});
 
-/* Save (with auto reindex) */
+/* حفظ */
 form.onsubmit=async e=>{
   e.preventDefault();
   let photoData = photoPreview.src || '';
@@ -501,15 +504,13 @@ form.onsubmit=async e=>{
     photo: photoData,
     health_role: healthRole.value || '',
     specialty: specialty.value || '',
-
     cert_heli: !!cert_heli.checked, cert_ops: !!cert_ops.checked, cert_diving: !!cert_diving.checked, cert_boat: !!cert_boat.checked,
     cert_med_report: !!cert_med_report.checked, cert_fitness: !!cert_fitness.checked, test_specialty: !!test_specialty.checked, test_reports: !!test_reports.checked, test_mountain: !!test_mountain.checked,
-
     warnings: currentWarnings,
     notes: (q('#notes')?.value||'').trim()
   };
 
-  const {error} = await sb.from('staff').upsert(obj); // بدون onConflict — أنت تصلح التكرار يدويًا
+  const {error} = await sb.from('staff').upsert(obj);
   if(error){ alert('فشل الحفظ: '+error.message); return; }
 
   await Promise.all([
@@ -525,7 +526,6 @@ form.onsubmit=async e=>{
 async function reorderRank(rankCode){
   const {data,error}=await sb.from('staff').select('id,rank,rank_no').eq('rank',rankCode);
   if(error||!data) return;
-  // رتّب حسب rank_no ثم id للاستقرار
   data.sort((a,b)=> (a.rank_no||0)-(b.rank_no||0) || (a.id>b.id?1:-1));
   let i=1;
   for(const rec of data){
@@ -535,8 +535,6 @@ async function reorderRank(rankCode){
     i++;
   }
 }
-
-/* زر يدوي لإعادة الترقيم لكل الرتب */
 document.getElementById('reindexBtn').onclick = async ()=>{
   for(const r of rankOrder){ await reorderRank(r); }
   await load();
@@ -555,8 +553,3 @@ await load();
 </script>
 </body>
 </html>
-
-
-
-
-
