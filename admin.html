@@ -468,7 +468,7 @@ function render(){
       </div>`).join('')}
   `;
 
-  statTotal.querySelector('small').textContent = `— ${list.length}`;
+  statTotal.querySelector('small').textContent = `${list.length}`;
 
   const counts = countByRank(ALL);
   for(const r of rankOrder){
@@ -618,3 +618,4 @@ await load();
 </script>
 </body>
 </html>
+
