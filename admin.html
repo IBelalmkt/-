@@ -39,11 +39,11 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 .btn.danger{background:#361b2a}
 .btn.ghost{background:#171230}
 
-/* زر chip */
+/* chip link */
 .link-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#e9e9ff;text-decoration:none;font-weight:700;font-size:12px}
 .link-chip .ico{font-size:14px;opacity:.85}
 
-/* شارة الإجمالي */
+/* stat */
 .stat{display:inline-flex;align-items:center;gap:10px;cursor:pointer;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#dfe3ff;font-weight:700;font-size:12px}
 .stat .dot{width:8px;height:8px;border-radius:50%;background:#3be48f;box-shadow:0 0 0 3px rgba(59,228,143,.12)}
 .stat small{opacity:.8;font-weight:600}
@@ -52,16 +52,19 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 .icon-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;border:var(--border);background:#171230;cursor:pointer}
 .icon-btn img{width:22px;height:22px;filter:invert(1)}
 
-/* فلتر */
+/* فلتر مطابق للـindex */
 .filter-wrap{position:relative}
 .filter-panel{position:absolute;right:0;top:42px;width:260px;background:#0f0b1a;border:var(--border);border-radius:14px;padding:10px;display:none;z-index:40}
 .filter-panel.open{display:block}
 .filter-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
-.filter-row label{font-size:13px;color:#d6dcf3}
-.filter-row .count{font-size:12px;color:#9fb0c4;background:#15122a;border:1px solid rgba(255,255,255,.08);padding:2px 8px;border-radius:999px}
+.filter-panel label{
+  font-size:13px;color:#d6dcf3;font-weight:500;
+  display:flex;flex-direction:row-reverse;align-items:center;gap:8px; /* checkbox يمين */
+}
+.filter-row .count{font-size:12px;color:#9fb0c4;background:#15122a;border:1px solid rgba(255,255,255,.08);padding:2px 8px;border-radius:999px;min-width:28px;text-align:center}
 .filter-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
 
-/* ORGANIZATION GRID */
+/* GRID */
 .org{display:grid;gap:18px;margin:16px 0}
 .row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
 .row-A{justify-content:center;margin-top:6px}
@@ -77,18 +80,18 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 .card .meta{font-size:12px;color:#aeb6c7;display:grid;gap:2px}
 .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;line-height:1;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#cfd6e6}
-.pill.heli{border-color:#ff6b6b;color:#ff9aa2;background:rgba(255,107,107,.12)} /* هيلكوبتر أحمر */
+.pill.heli{border-color:#ff6b6b;color:#ff9aa2;background:rgba(255,107,107,.12)}
 .rank-badge{position:absolute;inset:8px 8px auto auto;background:#281f4e;border:1px solid rgba(255,255,255,.12);color:#fff;padding:4px 8px;border-radius:999px;font-size:12px}
 
-/* شارة الصحة */
-.health-badge{position:absolute;inset:8px auto auto 8px;background:rgba(127,216,255,.14); color:#bfeaff;border:1px solid rgba(127,216,255,.35);padding:4px 8px;border-radius:999px;font-size:12px}
+/* badges */
+.health-badge{position:absolute;inset:8px auto auto 8px;background:rgba(127,216,255,.14);color:#bfeaff;border:1px solid rgba(127,216,255,.35);padding:4px 8px;border-radius:999px;font-size:12px}
 
-/* إنذارات */
+/* warns */
 .warns{position:absolute;bottom:12px;left:12px;display:flex;gap:6px}
 .warns .w{width:8px;height:8px;border-radius:50%;background:#3a3a50;border:1px solid rgba(255,255,255,.12)}
 .warns .w.active{background:#ff9aa9}
 
-/* Dialog */
+/* dialog & form (مثل ما هو) */
 dialog{border:none;border-radius:16px;background:#120d1f;color:var(--text);width:min(720px,94%);max-height:90vh;padding:16px}
 fieldset{border:var(--border);border-radius:14px;padding:14px;margin:8px 0 14px}
 legend{color:var(--muted);font-size:13px;padding:0 6px}
@@ -106,13 +109,73 @@ textarea{min-height:90px}
 .warn-select .warn-dot.active{background:#2c1f55;box-shadow:0 0 0 1px rgba(139,123,255,.25) inset}
 dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
 
-/* Mobile tweaks */
+/* Mobile */
 @media (max-width: 520px){
   .card{width:220px}
   .warns .w{width:6px;height:6px}
   .rank-badge,.health-badge{font-size:11px;padding:3px 8px}
   .pill{font-size:10px;padding:5px 8px}
 }
+/* === Buttons palette (force) === */
+.btn{
+  background:#1a1531 !important;      /* الافتراضي */
+  color:var(--text) !important;
+  border:1px solid rgba(255,255,255,.12) !important;
+  border-radius:12px;
+  padding:10px 12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.15s ease;
+}
+.btn.primary{ background:#211a48 !important; }  /* بنفسجي */
+.btn.danger{  background:#361b2a !important; }  /* أحمر غامق */
+.btn.ghost{   background:#171230 !important; }  /* شفاف غامق */
+
+.btn:hover{ transform:translateY(-1px); }
+.btn:active{ transform:translateY(0); }
+
+/* أماكن محددة لضمان الألوان داخل المكونات المختلفة */
+.actions .btn{ box-shadow:0 6px 16px rgba(139,123,255,.12); } /* أزرار الشريط العلوي */
+.card .btn{ background:#1a1531 !important; }                 /* زر "تعديل" */
+.card .btn.danger{ background:#361b2a !important; }          /* زر "حذف" */
+dialog .btn{ background:#1a1531 !important; }                /* إلغاء داخل النافذة */
+dialog .btn.primary{ background:#211a48 !important; }        /* حفظ داخل النافذة */
+/* === جعل صندوق الاختيار على اليمين مثل index === */
+.filter-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 0;
+}
+
+/* لا تستخدم row-reverse هنا */
+.filter-panel label{
+  display:flex;
+  flex-direction: row;           /* ← مهم */
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  color:#d6dcf3;
+  font-weight:500;
+}
+
+/* اجعل الـinput يظهر أول عنصر داخل الـlabel → على اليمين في RTL */
+.filter-panel label input{
+  order:-1;                      /* ← مهم */
+}
+
+/* العداد يبقى يسار السطر */
+.filter-row .count{
+  font-size:12px;
+  color:#9fb0c4;
+  background:#15122a;
+  border:1px solid rgba(255,255,255,.08);
+  padding:2px 8px;
+  border-radius:999px;
+  min-width:28px;
+  text-align:center;
+}
+
 </style>
 </head>
 <body>
@@ -136,30 +199,31 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
       <button id="reindexBtn" class="btn">تحديث الاكواد</button>
       <a class="link-chip" href="promotion.html"><span class="ico">⬈</span><span>متطلبات الترقية</span></a>
 
+      <!-- فلتر مطابق للـindex -->
       <div class="filter-wrap">
-        <!-- زر بصورة setting.png -->
         <button id="openFilters" class="icon-btn" aria-label="فلترة">
           <img src="setting.png" alt="فلترة">
         </button>
 
         <div class="filter-panel" id="filterPanel">
-          <div class="filter-row"><label><input type="checkbox" data-r="A" checked> مسؤول</label><span class="count" id="cntA">0</span></div>
-          <div class="filter-row"><label><input type="checkbox" data-r="V" checked> نائب</label><span class="count" id="cntV">0</span></div>
-          <div class="filter-row"><label><input type="checkbox" data-r="AD" checked> استشاري</label><span class="count" id="cntAD">0</span></div>
-          <div class="filter-row"><label><input type="checkbox" data-r="DS" checked> أخصائي</label><span class="count" id="cntDS">0</span></div>
-          <div class="filter-row"><label><input type="checkbox" data-r="D" checked> دكتور</label><span class="count" id="cntD">0</span></div>
-          <div class="filter-row"><label><input type="checkbox" data-r="DA" checked> مساعد دكتور</label><span class="count" id="cntDA">0</span></div>
-          <div class="filter-row"><label><input type="checkbox" data-r="N" checked> ممرض</label><span class="count" id="cntN">0</span></div>
-          <div class="filter-row"><label><input type="checkbox" data-r="T" checked> متدرب</label><span class="count" id="cntT">0</span></div>
-          <div class="filter-row"><label><input type="checkbox" data-r="C" checked> متطوع</label><span class="count" id="cntC">0</span></div>
+          <!-- افتراضيًا غير محدد مثل index -->
+          <div class="filter-row"><label><input type="checkbox" data-r="A"> مسؤول</label><span class="count" id="cntA">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="V"> نائب</label><span class="count" id="cntV">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="AD"> استشاري</label><span class="count" id="cntAD">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="DS"> أخصائي</label><span class="count" id="cntDS">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="D"> دكتور</label><span class="count" id="cntD">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="DA">د.مساعد</label><span class="count" id="cntDA">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="N"> ممرض</label><span class="count" id="cntN">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="T"> متدرب</label><span class="count" id="cntT">0</span></div>
+          <div class="filter-row"><label><input type="checkbox" data-r="C"> متطوع</label><span class="count" id="cntC">0</span></div>
 
-          <!-- أزرار chip مثل الاندكس -->
           <div class="filter-actions">
             <button id="applyFilters" class="link-chip" type="button"><span class="ico">✓</span>تطبيق</button>
             <button id="resetFilters" class="link-chip" type="button"><span class="ico">↺</span>مسح</button>
           </div>
         </div>
       </div>
+      <!-- /فلتر -->
     </div>
   </div>
 </nav>
@@ -289,7 +353,7 @@ const resetFilters = document.getElementById('resetFilters');
 const formDialog = document.getElementById('formDialog');
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* Auth: اطلب كلمة المرور فقط */
+/* Auth */
 (async ()=>{
   const { data:{ user } } = await sb.auth.getUser();
   if(!user){
@@ -318,7 +382,8 @@ const warnSelect=q('#warnSelect'); let currentWarnings=0;
 q('#cancelBtn').onclick=()=>formDialog.close();
 
 let ALL=[]; 
-let STATE={ ranks:new Set(rankOrder), q:'' };
+/* مثل index: افتراضيًا لا يوجد تحديد => عرض الكل */
+let STATE={ ranks:new Set(), q:'' };
 
 /* الإنذارات */
 warnSelect.querySelectorAll('.warn-dot').forEach(d=>{
@@ -347,7 +412,7 @@ const certList = x=>{
 const warnsHTML = n=> new Array(3).fill(0).map((_,i)=>`<span class="w ${n>i?'active':''}"></span>`).join('');
 
 /* Card */
-window.__edit=id=>openForm(ALL.find(x=>x.id===id));
+window.__edit=id=>window.openForm(ALL.find(x=>x.id===id));
 window.__del=async id=>{
   if(!confirm('تأكيد الحذف؟')) return;
   const rec = ALL.find(r=>r.id===id);
@@ -385,7 +450,7 @@ function cardHTML(x){
 function render(){
   const qtxt=STATE.q.trim().toLowerCase();
   let list=ALL.filter(x=>{
-    const okRank = STATE.ranks.has(x.rank);
+    const okRank = STATE.ranks.size ? STATE.ranks.has(x.rank) : true; // فاضي => الكل
     const okQ = !qtxt || x.name?.toLowerCase().includes(qtxt) || x.nid?.includes(qtxt);
     return okRank && okQ;
   });
@@ -429,21 +494,24 @@ statTotal.onclick=load;
 /* Search */
 searchInput.oninput=()=>{STATE.q=searchInput.value;render();};
 
-/* فلتر: زر يفتح/يقفل فقط، اختيار الشيكبوكس لا يغلق اللوحة */
+/* فلتر (مطابق index): فتح/إغلاق بالزر فقط، تطبيق لا يغلق، مسح يلغي التحديد */
 openFilters.onclick=(e)=>{ e.stopPropagation(); filterPanel.classList.toggle('open'); };
+
 applyFilters.onclick=()=>{ 
   const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
-  STATE.ranks = new Set(Array.from(checks).filter(c=>c.checked).map(c=>c.getAttribute('data-r')));
-  render(); // لا نغلق اللوحة حسب طلبك
+  const selected = Array.from(checks).filter(c=>c.checked).map(c=>c.getAttribute('data-r'));
+  STATE.ranks = new Set(selected); // فاضي => الكل
+  render(); // لا نغلق اللوحة
 };
+
 resetFilters.onclick=()=>{ 
   const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
-  checks.forEach(c=>c.checked=true);
-  STATE.ranks = new Set(rankOrder);
+  checks.forEach(c=>c.checked=false);
+  STATE.ranks = new Set(); // فاضي => عرض الكل
   render();
 };
 
-/* إغلاق عند الضغط خارج البطاقة/المودال */
+/* إغلاق عند الضغط خارج اللوحة */
 document.addEventListener('click', (e)=>{
   const withinPanel = filterPanel.contains(e.target);
   const onButton = openFilters.contains(e.target);
@@ -451,12 +519,9 @@ document.addEventListener('click', (e)=>{
     filterPanel.classList.remove('open');
   }
 });
-formDialog.addEventListener('click', (e)=>{
-  if(e.target === formDialog) formDialog.close();
-});
 
-/* فورم الإضافة/التعديل */
-function openForm(item){
+/* فورم الإضافة/التعديل (مكشوفة على window) */
+window.openForm = function(item){
   form.reset(); photoPreview.src=''; editId.value=''; currentWarnings=0;
   warnSelect.querySelectorAll('.warn-dot').forEach(x=>x.classList.remove('active'));
 
@@ -470,8 +535,8 @@ function openForm(item){
     (q('#notes')).value=item.notes||'';
   }
   formDialog.showModal();
-}
-document.getElementById('addBtn').onclick=()=>openForm();
+};
+document.getElementById('addBtn').onclick=()=>window.openForm();
 
 /* لصق/سحب صورة */
 document.addEventListener("paste",e=>{
