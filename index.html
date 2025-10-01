@@ -223,7 +223,7 @@ function render(){
     <div class="row row-V">${groups.V.map(cardHTML).join('')}</div>
     ${['AD','DS','D','DA','N','T','C'].map(r=>`<div class="row row-${r}">${groups[r].map(cardHTML).join('')}</div>`).join('')}
   `;
-  statTotal.querySelector('small').textContent=`— ${list.length}`;
+  statTotal.querySelector('small').textContent=` ${list.length}`;
 
   const counts = countByRank(ALL);
   for(const r of rankOrder){
@@ -282,3 +282,4 @@ await load();
 </script>
 </body>
 </html>
+
