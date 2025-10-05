@@ -14,6 +14,8 @@
 *{box-sizing:border-box}
 body{margin:0;background:radial-gradient(1000px 500px at 20% -10%, rgba(139,123,255,.11), transparent), var(--bg); color:var(--text); font-family:"Cairo",sans-serif}
 .container{width:min(1200px,92%);margin:auto}
+
+/* Intro */
 #intro{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0b0613 0%,#120c1f 70%);}
 .intro-box{display:grid;place-items:center;gap:8px;text-align:center;animation:fadeUp .7s ease both}
 .intro-logo{width:110px;height:110px;border-radius:28px;background:url('RTHospital.png') center/cover no-repeat;box-shadow:0 10px 40px rgba(139,123,255,.35);animation:pulse 1.8s ease-in-out infinite}
@@ -23,6 +25,8 @@ body{margin:0;background:radial-gradient(1000px 500px at 20% -10%, rgba(139,123,
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .hide-intro{animation:fadeOut .8s ease forwards}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
+
+/* NAV */
 nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filter:blur(10px);border-bottom:var(--border)}
 .nav-in{display:flex;align-items:center;gap:12px;padding:12px 0}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800}
@@ -34,24 +38,40 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 .btn.primary{background:#211a48}
 .btn.danger{background:#361b2a}
 .btn.ghost{background:#171230}
+
+/* chip link */
 .link-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#e9e9ff;text-decoration:none;font-weight:700;font-size:12px}
 .link-chip .ico{font-size:14px;opacity:.85}
+
+/* stat */
 .stat{display:inline-flex;align-items:center;gap:10px;cursor:pointer;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#dfe3ff;font-weight:700;font-size:12px}
 .stat .dot{width:8px;height:8px;border-radius:50%;background:#3be48f;box-shadow:0 0 0 3px rgba(59,228,143,.12)}
 .stat small{opacity:.8;font-weight:600}
+
+/* زر الفلترة بصورة */
 .icon-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;border:var(--border);background:#171230;cursor:pointer}
 .icon-btn img{width:22px;height:22px;filter:invert(1)}
+
+/* فلتر مطابق للـindex */
 .filter-wrap{position:relative}
 .filter-panel{position:absolute;right:0;top:42px;width:260px;background:#0f0b1a;border:var(--border);border-radius:14px;padding:10px;display:none;z-index:40}
 .filter-panel.open{display:block}
 .filter-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
-.filter-panel label{font-size:13px;color:#d6dcf3;font-weight:500;display:flex;flex-direction:row-reverse;align-items:center;gap:8px}
+.filter-panel label{
+  font-size:13px;color:#d6dcf3;font-weight:500;
+  display:flex;flex-direction:row-reverse;align-items:center;gap:8px;
+}
 .filter-row .count{font-size:12px;color:#9fb0c4;background:#15122a;border:1px solid rgba(255,255,255,.08);padding:2px 8px;border-radius:999px;min-width:28px;text-align:center}
+.filter-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+
+/* GRID */
 .org{display:grid;gap:18px;margin:16px 0}
 .row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
 .row-A{justify-content:center;margin-top:6px}
 .row-A .card{transform:translateY(-8px)}
 .row-V{justify-content:center}
+
+/* CARD */
 .card{position:relative;background:rgba(25,18,38,.6);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;width:260px;box-shadow:0 8px 28px rgba(139,92,246,.10)}
 .card .media{display:grid;place-items:center;padding:14px 0 6px}
 .card .avatar{width:88px;height:88px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.1);box-shadow:0 0 0 4px rgba(255,255,255,.05)}
@@ -62,10 +82,16 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 .pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;line-height:1;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#cfd6e6}
 .pill.heli{border-color:#ff6b6b;color:#ff9aa2;background:rgba(255,107,107,.12)}
 .rank-badge{position:absolute;inset:8px 8px auto auto;background:#281f4e;border:1px solid rgba(255,255,255,.12);color:#fff;padding:4px 8px;border-radius:999px;font-size:12px}
+
+/* badges */
 .health-badge{position:absolute;inset:8px auto auto 8px;background:rgba(127,216,255,.14);color:#bfeaff;border:1px solid rgba(127,216,255,.35);padding:4px 8px;border-radius:999px;font-size:12px}
+
+/* warns */
 .warns{position:absolute;bottom:12px;left:12px;display:flex;gap:6px}
 .warns .w{width:8px;height:8px;border-radius:50%;background:#3a3a50;border:1px solid rgba(255,255,255,.12)}
 .warns .w.active{background:#ff9aa9}
+
+/* dialog & form */
 dialog{border:none;border-radius:16px;background:#120d1f;color:var(--text);width:min(720px,94%);max-height:90vh;padding:16px}
 fieldset{border:var(--border);border-radius:14px;padding:14px;margin:8px 0 14px}
 legend{color:var(--muted);font-size:13px;padding:0 6px}
@@ -82,23 +108,36 @@ textarea{min-height:90px}
 .warn-select .warn-dot{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#1a1531;border:var(--border);color:#cfd4ea;cursor:pointer;user-select:none;font-weight:700;font-size:12px}
 .warn-select .warn-dot.active{background:#2c1f55;box-shadow:0 0 0 1px rgba(139,123,255,.25) inset}
 dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
+
+/* Mobile */
 @media (max-width: 520px){
   .card{width:220px}
   .warns .w{width:6px;height:6px}
   .rank-badge,.health-badge{font-size:11px;padding:3px 8px}
   .pill{font-size:10px;padding:5px 8px}
 }
-.btn{background:#1a1531 !important;color:var(--text) !important;border:1px solid rgba(255,255,255,.12) !important;border-radius:12px;padding:10px 12px;font-weight:700;cursor:pointer;transition:.15s ease}
-.btn.primary{ background:#211a48 !important;}
-.btn.danger{  background:#361b2a !important;}
-.btn.ghost{   background:#171230 !important;}
-.btn:hover{ transform:translateY(-1px);}
-.btn:active{ transform:translateY(0);}
-.actions .btn{ box-shadow:0 6px 16px rgba(139,123,255,.12);}
-.card .btn{ background:#1a1531 !important;}
-.card .btn.danger{ background:#361b2a !important;}
-dialog .btn{ background:#1a1531 !important;}
-dialog .btn.primary{ background:#211a48 !important;}
+.btn{
+  background:#1a1531 !important;
+  color:var(--text) !important;
+  border:1px solid rgba(255,255,255,.12) !important;
+  border-radius:12px;
+  padding:10px 12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.15s ease;
+}
+.btn.primary{ background:#211a48 !important; }
+.btn.danger{  background:#361b2a !important; }
+.btn.ghost{   background:#171230 !important; }
+.btn:hover{ transform:translateY(-1px); }
+.btn:active{ transform:translateY(0); }
+
+.actions .btn{ box-shadow:0 6px 16px rgba(139,123,255,.12); }
+.card .btn{ background:#1a1531 !important; }
+.card .btn.danger{ background:#361b2a !important; }
+dialog .btn{ background:#1a1531 !important; }
+dialog .btn.primary{ background:#211a48 !important; }
+
 .filter-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
 .filter-panel label{display:flex;flex-direction: row;align-items:center;gap:8px;font-size:13px;color:#d6dcf3;font-weight:500}
 .filter-panel label input{order:-1}
@@ -117,15 +156,19 @@ dialog .btn.primary{ background:#211a48 !important;}
   <div class="container nav-in">
     <div class="brand"><span class="logo"></span><span>ادارة المستشفى</span></div>
     <div class="search"><input id="searchInput" placeholder="بحث بالاسم او الرقم الوطني"></div>
+
     <div class="stat" id="statTotal" title="تحديث"><span class="dot"></span><span>الاجمالي</span><small>0</small></div>
+
     <div class="actions">
       <button id="addBtn" class="btn primary">اضافة</button>
       <button id="reindexBtn" class="btn">تحديث الاكواد</button>
       <a class="link-chip" href="promotion.html"><span class="ico">⬈</span><span>متطلبات الترقية</span></a>
+
       <div class="filter-wrap">
         <button id="openFilters" class="icon-btn" aria-label="فلترة">
           <img src="setting.png" alt="فلترة">
         </button>
+
         <div class="filter-panel" id="filterPanel">
           <div class="filter-row"><label><input type="checkbox" data-r="A"> مسؤول</label><span class="count" id="cntA">0</span></div>
           <div class="filter-row"><label><input type="checkbox" data-r="V"> نائب</label><span class="count" id="cntV">0</span></div>
@@ -136,6 +179,7 @@ dialog .btn.primary{ background:#211a48 !important;}
           <div class="filter-row"><label><input type="checkbox" data-r="N"> ممرض</label><span class="count" id="cntN">0</span></div>
           <div class="filter-row"><label><input type="checkbox" data-r="T"> متدرب</label><span class="count" id="cntT">0</span></div>
           <div class="filter-row"><label><input type="checkbox" data-r="C"> متطوع</label><span class="count" id="cntC">0</span></div>
+
           <div class="filter-actions">
             <button id="applyFilters" class="link-chip" type="button"><span class="ico">✓</span>تطبيق</button>
             <button id="resetFilters" class="link-chip" type="button"><span class="ico">↺</span>مسح</button>
@@ -147,6 +191,7 @@ dialog .btn.primary{ background:#211a48 !important;}
 </nav>
 
 <header class="container"></header>
+
 <main class="container">
   <div id="org" class="org"></div>
 </main>
@@ -154,6 +199,7 @@ dialog .btn.primary{ background:#211a48 !important;}
 <dialog id="formDialog">
   <form id="personForm">
     <h3 style="margin:0 0 8px">بيانات الموظف</h3>
+
     <div class="preview" id="dropZone" title="اسحب/ألصق صورة">
       <img id="photoPreview" alt="صورة"/>
       <div style="flex:1">
@@ -162,10 +208,12 @@ dialog .btn.primary{ background:#211a48 !important;}
         <div style="font-size:12px;color:var(--muted);margin-top:6px">اضافةاو لصق للصورة</div>
       </div>
     </div>
+
     <div class="row2">
       <div><label>الاسم</label><input id="name" required></div>
       <div><label>الرقم الوطني</label><input id="nid" required></div>
     </div>
+
     <div class="row2">
       <div>
         <label>الرتبة</label>
@@ -177,6 +225,7 @@ dialog .btn.primary{ background:#211a48 !important;}
       </div>
       <div><label>رقم التسلسل داخل الرتبة</label><input id="rankNo" type="number" min="1" value="1" required></div>
     </div>
+
     <div class="row2">
       <div>
         <label>الدور الصحي</label>
@@ -207,6 +256,7 @@ dialog .btn.primary{ background:#211a48 !important;}
         </select>
       </div>
     </div>
+
     <fieldset>
       <legend>الشهادات / الاختبارات</legend>
       <div class="form-grid">
@@ -221,6 +271,7 @@ dialog .btn.primary{ background:#211a48 !important;}
         <label class="check"><input type="checkbox" id="test_mountain"><span>اختبار الجبال</span></label>
       </div>
     </fieldset>
+
     <div>
       <label>الإنذارات (0–3)</label>
       <div class="warn-select" id="warnSelect">
@@ -228,7 +279,9 @@ dialog .btn.primary{ background:#211a48 !important;}
         <div class="warn-dot" data-v="2">2</div><div class="warn-dot" data-v="3">3</div>
       </div>
     </div>
+
     <div><label>ملاحظات</label><textarea id="notes" rows="3"></textarea></div>
+
     <div style="display:flex;gap:8px;justify-content:flex-end">
       <button type="button" class="btn" id="cancelBtn">إلغاء</button>
       <button type="submit" class="btn primary">حفظ</button>
@@ -247,6 +300,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const SUPABASE_URL = "https://kdsnmgfrdykmupnrmksy.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtkc25tZ2ZyZHlrbXVwbnJta3N5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxNTE2NDgsImV4cCI6MjA3NDcyNzY0OH0.Ly_frv4P1P45OYmTEt6hDThSx5rD6S1a96dNKhVc1Yc";
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const BUCKET = "photos";
 
 const ADMIN_EMAIL = "belmonster691@gmail.com";
 
@@ -355,22 +409,27 @@ function render(){
     const okQ = !qtxt || x.name?.toLowerCase().includes(qtxt) || x.nid?.includes(qtxt);
     return okRank && okQ;
   });
+
   const groups = {}; rankOrder.forEach(r=>groups[r]=[]);
   list.forEach(x=>groups[x.rank]?.push(x));
   rankOrder.forEach(r=>groups[r].sort((a,b)=>(a.rank_no||0)-(b.rank_no||0)));
+
   org.innerHTML = `
     <div class="row row-A">${groups.A.map(cardHTML).join('')}</div>
     <div class="row row-V">${groups.V.map(cardHTML).join('')}</div>
     ${['AD','DS','D','DA','N','T','C'].map(r=>`
       <div class="row row-${r}">${groups[r].map(cardHTML).join('')}</div>`).join('')}
   `;
+
   statTotal.querySelector('small').textContent = `${list.length}`;
+
   const counts = countByRank(ALL);
   for(const r of rankOrder){
     const el = document.getElementById('cnt'+r) || document.getElementById('cnt'+(r==='AD'?'AD':r));
     if(el) el.textContent = counts[r]||0;
   }
 }
+
 function countByRank(data){
   const out={}; for(const r of rankOrder) out[r]=0;
   data.forEach(x=>{ if(out[x.rank]!==undefined) out[x.rank]++; });
@@ -387,18 +446,21 @@ statTotal.onclick=load;
 searchInput.oninput=()=>{STATE.q=searchInput.value;render();};
 
 openFilters.onclick=(e)=>{ e.stopPropagation(); filterPanel.classList.toggle('open'); };
+
 applyFilters.onclick=()=>{
   const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
   const selected = Array.from(checks).filter(c=>c.checked).map(c=>c.getAttribute('data-r'));
   STATE.ranks = new Set(selected);
   render();
 };
+
 resetFilters.onclick=()=>{
   const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
   checks.forEach(c=>c.checked=false);
   STATE.ranks = new Set();
   render();
 };
+
 document.addEventListener('click', (e)=>{
   const withinPanel = filterPanel.contains(e.target);
   const onButton = openFilters.contains(e.target);
@@ -410,6 +472,7 @@ document.addEventListener('click', (e)=>{
 window.openForm = function(item){
   form.reset(); photoPreview.src=''; editId.value=''; currentWarnings=0;
   warnSelect.querySelectorAll('.warn-dot').forEach(x=>x.classList.remove('active'));
+
   if(item){
     editId.value=item.id; nameInput.value=item.name||''; nidInput.value=item.nid||'';
     rankSelect.value=item.rank||'A'; rankNoInput.value=item.rank_no||1; photoPreview.src=item.photo||'';
@@ -426,91 +489,83 @@ document.getElementById('addBtn').onclick=()=>window.openForm();
 document.addEventListener("paste",e=>{
   if(!formDialog.open) return;
   const it=e.clipboardData?.items||[];
-  for(const t of it){ if(t.type.startsWith('image/')){ const f=t.getAsFile(); f && handleFile(f); e.preventDefault(); break; } }
+  for(const t of it){
+    if(t.type.startsWith('image/')){
+      const f=t.getAsFile(); if(f) handleFile(f);
+      e.preventDefault(); break;
+    }
+  }
 });
 ['dragenter','dragover'].forEach(ev=> dropZone.addEventListener(ev,e=>{e.preventDefault();dropZone.classList.add('drag');}));
 ['dragleave','drop'].forEach(ev=> dropZone.addEventListener(ev,e=>{e.preventDefault();dropZone.classList.remove('drag');}));
 dropZone.addEventListener('drop', e=>{ const f=e.dataTransfer.files?.[0]; if(f) handleFile(f); });
 photoInput.onchange=()=>{ const f=photoInput.files?.[0]; if(f) handleFile(f); };
 function handleFile(file){ const fr=new FileReader(); fr.onload=()=>{photoPreview.src=fr.result}; fr.readAsDataURL(file); }
+const fileToDataUrl=f=>new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.onerror=rej;fr.readAsDataURL(f);});
 
+/* ====== رفع الصور تلقائياً إلى التخزين ثم حفظ السجل ====== */
 function dataUrlToBlob(d){
-  const [h,b] = d.split(',');
-  const mime = (h.split(';')[0]||'').replace('data:','') || 'image/png';
-  const bin  = atob(b);
-  const u8   = new Uint8Array(bin.length);
-  for(let i=0;i<bin.length;i++) u8[i] = bin.charCodeAt(i);
-  return new Blob([u8], { type: mime });
+  const [h,b]=String(d).split(',');
+  const mime=(h?.split(';')[0]||'').replace('data:','')||'image/png';
+  const bin=atob(b||'');
+  const u8=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) u8[i]=bin.charCodeAt(i);
+  return new Blob([u8],{type:mime});
 }
-function extFromMime(m){
-  return m==='image/jpeg'?'jpg' : m==='image/png'?'png' : m==='image/webp'?'webp' : 'bin';
-}
-async function uploadAndGetUrlToPhotos(id, fileOrDataUrl){
-  let blob, mime;
-  if (fileOrDataUrl instanceof File){
-    blob = fileOrDataUrl; mime = fileOrDataUrl.type;
-  } else if (typeof fileOrDataUrl === 'string' && fileOrDataUrl.startsWith('data:')){
-    blob = dataUrlToBlob(fileOrDataUrl); mime = blob.type;
-  } else {
-    return null;
-  }
-  const ext  = extFromMime(mime);
-  const path = `staff/${id}.${ext}`;
-  const up   = await sb.storage.from('photos').upload(path, blob, { upsert:true, contentType:mime, cacheControl:'31536000' });
-  if (up.error) throw up.error;
-  return sb.storage.from('photos').getPublicUrl(path).data.publicUrl;
+function extFromType(t){ return t==='image/jpeg'?'jpg':t==='image/png'?'png':t==='image/webp'?'webp':'bin'; }
+function uniquePhotoPath(id, type){
+  const ext = extFromType(type||'image/png');
+  const nonce = Date.now()+'-'+Math.random().toString(36).slice(2,7);
+  return `staff/${id}/${nonce}.${ext}`;
 }
 
-form.onsubmit = async (e)=>{
+form.onsubmit=async e=>{
   e.preventDefault();
 
-  const existing = editId.value ? ALL.find(r=>r.id===editId.value) : null;
-  const oldRank  = existing?.rank;
+  const isEdit = !!editId.value;
+  const id = isEdit ? editId.value : crypto.randomUUID();
+  const existing = isEdit ? ALL.find(r=>r.id===id) : null;
+  const oldRank = existing?.rank;
 
-  const fields = {
-    name: (nameInput.value||'').trim(),
-    nid:  (nidInput.value||'').trim(),
+  let fileOrBlob=null;
+  if(photoInput.files?.[0]) fileOrBlob = photoInput.files[0];
+  else if(photoPreview.src && photoPreview.src.startsWith('data:')) fileOrBlob = dataUrlToBlob(photoPreview.src);
+
+  let photoUrl = existing?.photo || null;
+
+  if(fileOrBlob){
+    const path = uniquePhotoPath(id, fileOrBlob.type);
+    const up = await sb.storage.from(BUCKET).upload(path, fileOrBlob, {
+      upsert:false,
+      contentType:fileOrBlob.type || 'image/png',
+      cacheControl:'31536000'
+    });
+    if(up.error){ alert('فشل رفع الصورة: '+up.error.message); return; }
+    const { data } = sb.storage.from(BUCKET).getPublicUrl(path);
+    photoUrl = data.publicUrl;
+  }
+
+  const obj = {
+    id,
+    name: nameInput.value.trim(),
+    nid: nidInput.value.trim(),
     rank: rankSelect.value,
     rank_no: parseInt(rankNoInput.value,10)||1,
+    photo: photoUrl,
     health_role: healthRole.value || '',
-    specialty:   specialty.value || '',
+    specialty: specialty.value || '',
     cert_heli: !!cert_heli.checked, cert_ops: !!cert_ops.checked, cert_diving: !!cert_diving.checked, cert_boat: !!cert_boat.checked,
     cert_med_report: !!cert_med_report.checked, cert_fitness: !!cert_fitness.checked, test_specialty: !!test_specialty.checked, test_reports: !!test_reports.checked, test_mountain: !!test_mountain.checked,
     warnings: currentWarnings,
     notes: (q('#notes')?.value||'').trim()
   };
 
-  let rowId;
-
-  if (editId.value){
-    const { error } = await sb.from('staff').update(fields).eq('id', editId.value);
-    if (error){ alert('فشل الحفظ: '+error.message); return; }
-    rowId = editId.value;
-  } else {
-    const { data, error } = await sb.from('staff').insert({ ...fields, photo: null }).select('id').single();
-    if (error){ alert('فشل الحفظ: '+error.message); return; }
-    rowId = data.id;
-  }
-
-  const file    = photoInput.files?.[0] || null;
-  const dataURL = (!file && photoPreview.src && photoPreview.src.startsWith('data:')) ? photoPreview.src : null;
-
-  if (file || dataURL){
-    try{
-      const url = await uploadAndGetUrlToPhotos(rowId, file || dataURL);
-      if (url){
-        const { error: uErr } = await sb.from('staff').update({ photo: url }).eq('id', rowId);
-        if (uErr){ console.error(uErr); alert('تم رفع الصورة لكن فشل تحديث الرابط'); }
-      }
-    }catch(e){
-      console.error(e);
-      alert('فشل رفع الصورة: '+(e?.message||e));
-    }
-  }
+  const {error} = await sb.from('staff').upsert(obj);
+  if(error){ alert('فشل الحفظ: '+error.message); return; }
 
   await Promise.all([
-    reorderRank(fields.rank),
-    oldRank && oldRank!==fields.rank ? reorderRank(oldRank) : Promise.resolve()
+    reorderRank(obj.rank),
+    oldRank && oldRank!==obj.rank ? reorderRank(oldRank) : Promise.resolve()
   ]);
 
   formDialog.close();
