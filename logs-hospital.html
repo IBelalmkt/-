@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>لوغ المستشفى</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0712; --panel:#0f0b1a; --card:#131020; --muted:#a7a4be; --text:#efecff;
+  --brand:#8b7bff; --accent:#ff6b9e; --ok:#54e6a6; --border:1px solid rgba(255,255,255,.08);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:
+    radial-gradient(900px 500px at 20% -10%, rgba(139,123,255,.10), transparent),
+    radial-gradient(900px 500px at 90% 120%, rgba(84,230,166,.06), transparent),
+    var(--bg);
+  color:var(--text);
+  font-family:"Cairo",sans-serif;
+}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(15,11,26,.78); backdrop-filter:blur(10px);
+  border-bottom:var(--border);
+}
+.nav-in{width:min(1200px,92%);margin:auto;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.brand .logo{
+  width:36px;height:36px;border-radius:10px;
+  background:url('RTHospital.png') center/cover no-repeat;
+  box-shadow:0 0 0 1px rgba(255,255,255,.1) inset;
+}
+.nav-actions{display:flex;gap:8px}
+.link{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:10px;border:var(--border);background:#171230;color:#e9e9ff;text-decoration:none;font-weight:700;font-size:13px}
+
+/* Toolbar */
+.toolbar{display:flex;gap:8px;align-items:center}
+.toolbar input,.toolbar select,.toolbar button{
+  background:#171230;border:var(--border);color:var(--text);
+  border-radius:10px;padding:8px 10px;font-family:inherit
+}
+.toolbar button{cursor:pointer;font-weight:800}
+.toolbar .refresh{background:#211a48}
+
+/* content container */
+.container{width:min(1200px,92%);margin:18px auto}
+
+/* Cards */
+#logsWrap{display:grid;gap:12px}
+.log-card{
+  background:var(--panel);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:16px;
+  padding:12px 14px;
+  box-shadow:0 10px 26px rgba(0,0,0,.22);
+}
+.head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13px;color:#cfd6ff}
+.head .time{opacity:.9}
+.head .op{
+  padding:2px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.1);
+  background:#1d1a35;font-weight:800;font-size:12px
+}
+.head .op.update{background:#1c2b4e}
+.head .op.insert{background:#183b2f}
+.head .op.delete{background:#4a1f2e}
+.actor{margin-inline-start:auto;font-weight:700;color:#bfe0ff}
+.target{margin-top:8px;font-size:14px}
+.target b{color:#fff}
+.diffs{margin-top:8px;display:grid;gap:8px}
+.diff{
+  background:#12102a;border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:8px 10px;font-size:13px
+}
+.diff .before{opacity:.75}
+.diff .after{font-weight:800}
+.msg{
+  padding:16px;text-align:center;color:var(--muted);
+  border:1px dashed rgba(255,255,255,.2);border-radius:12px
+}
+
+/* small */
+@media (max-width:600px){
+  .nav-in{grid-template-columns:1fr auto}
+  .brand{grid-column:1/3}
+  .toolbar{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><span class="logo"></span><span>لوغ المستشفى</span></div>
+
+    <div class="toolbar">
+      <button id="refresh" class="refresh">تحديث</button>
+      <select id="opFilter">
+        <option value="all">كل العمليات</option>
+        <option value="insert">insert</option>
+        <option value="update">update</option>
+        <option value="delete">delete</option>
+      </select>
+      <input id="from" type="date" title="من" />
+      <span>إلى</span>
+      <input id="to" type="date" title="إلى" />
+      <input id="search" placeholder="بحث بالاسم/الإيميل" style="flex:1" />
+    </div>
+
+    <div class="nav-actions">
+      <a class="link" href="admin.html">⟵ رجوع للإدارة</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <div id="logsWrap"></div>
+</main>
+
+<script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+  // بدّل القيم لو لزم
+  const sb = createClient(
+    "https://kdsnmgfrdykmupnrmksy.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtkc25tZ2ZyZHlrbXVwbnJta3N5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxNTE2NDgsImV4cCI6MjA3NDcyNzY0OH0.Ly_frv4P1P45OYmTEt6hDThSx5rD6S1a96dNKhVc1Yc"
+  );
+
+  // عناصر
+  const wrap     = document.getElementById("logsWrap");
+  const refresh  = document.getElementById("refresh");
+  const opFilter = document.getElementById("opFilter");
+  const search   = document.getElementById("search");
+  const fromDate = document.getElementById("from");
+  const toDate   = document.getElementById("to");
+
+  // تنسيق وقت السعودية (ميلادي)
+  const toKSA = (ts)=>{
+    try{ return new Date(ts).toLocaleString('en-GB',{ timeZone:'Asia/Riyadh' }); }
+    catch{ return ts; }
+  };
+
+  // تسميات الحقول
+  const labelMap = {
+    name:'الاسم', nid:'الرقم الوطني', rank:'الرتبة', rank_no:'التسلسل',
+    health_role:'الدور الصحي', specialty:'التخصص', warnings:'الإنذارات',
+    photo:'الصورة', notes:'الملاحظات',
+    cert_heli:'شهادة هليكوبتر', cert_ops:'شهادة عمليات', cert_diving:'شهادة غوص',
+    cert_boat:'شهادة قيادة قارب', cert_fitness:'تقرير فحص لياقة', cert_med_report:'تقارير طبية',
+    test_specialty:'اختبار بالتخصص', test_reports:'اختبارات تقارير', test_mountain:'اختبار الجبال'
+  };
+  const label = k => labelMap[k] || k;
+
+  const diffRow = d=>{
+    const k = d.key || '';
+    const before = (d.before===null||d.before===undefined) ? '—' : d.before;
+    const after  = (d.after===null||d.after===undefined)  ? '—' : d.after;
+    return `<div class="diff"><b>${label(k)}</b> : <span class="before">${before}</span> → <span class="after">${after}</span></div>`;
+  };
+
+  const card = row=>{
+    const diffs = Array.isArray(row.diffs) ? row.diffs : (row.diffs || []);
+    const target = row.target_name || row.staff_id || '—';
+    return `
+      <article class="log-card">
+        <div class="head">
+          <span class="time">${toKSA(row.created_at)}</span>
+          <span class="op ${row.op}">${row.op}</span>
+          <span class="actor">${row.actor_email || '—'}</span>
+        </div>
+        <div class="target">المستهدف: <b>${target}</b></div>
+        ${diffs.length ? `<div class="diffs">${diffs.map(diffRow).join('')}</div>` : ''}
+      </article>
+    `;
+  };
+
+  async function load(){
+    if(!wrap) return;
+    wrap.innerHTML = `<div class="msg">... تحميل</div>`;
+
+    let q = sb.from('staff_logs')
+      .select('id, created_at, op, actor_email, staff_id, target_name, diffs')
+      .order('created_at', { ascending:false })
+      .limit(500);
+
+    if(opFilter.value !== 'all') q = q.eq('op', opFilter.value);
+
+    if(fromDate.value){
+      const fromIso = new Date(fromDate.value).toISOString();
+      q = q.gte('created_at', fromIso);
+    }
+    if(toDate.value){
+      const t = new Date(toDate.value); t.setDate(t.getDate()+1);
+      q = q.lt('created_at', t.toISOString());
+    }
+    if(search.value.trim()){
+      const s = search.value.trim();
+      q = q.or(`target_name.ilike.%${s}%,actor_email.ilike.%${s}%`);
+    }
+
+    const { data, error } = await q;
+    if(error){ wrap.innerHTML = `<div class="msg">فشل جلب اللوقات: ${error.message}</div>`; return; }
+    wrap.innerHTML = data.length ? data.map(card).join('') : `<div class="msg">لا توجد سجلات.</div>`;
+  }
+
+  refresh.addEventListener('click', load);
+  [opFilter, search, fromDate, toDate].forEach(el=> el.addEventListener('input', load));
+
+  // بثّ حي
+  sb.channel('staff-logs-rt')
+    .on('postgres_changes', {event:'*', schema:'public', table:'staff_logs'}, load)
+    .subscribe();
+
+  // أول تحميل
+  await load();
+</script>
+</body>
+</html>
