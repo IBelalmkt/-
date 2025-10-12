@@ -163,6 +163,7 @@ dialog .btn.primary{ background:#211a48 !important; }
       <button id="addBtn" class="btn primary">اضافة</button>
       <button id="reindexBtn" class="btn">تحديث الاكواد</button>
       <a class="link-chip" href="promotion.html"><span class="ico">⬈</span><span>متطلبات الترقية</span></a>
+<a href="logs-hospital.html" class="btn">logs</a>
 
       <div class="filter-wrap">
         <button id="openFilters" class="icon-btn" aria-label="فلترة">
@@ -302,7 +303,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const BUCKET = "photos";
 
-const ADMIN_EMAIL = "belmonster691@gmail.com";
+
 
 const org = document.getElementById('org');
 const statTotal = document.getElementById('statTotal');
@@ -315,14 +316,21 @@ const formDialog = document.getElementById('formDialog');
 document.getElementById('year').textContent = new Date().getFullYear();
 
 (async ()=>{
-  const { data:{ user } } = await sb.auth.getUser();
-  if(!user){
-    const pwd = prompt('أدخل كلمة مرور الإدارة:');
-    if(!pwd){ location.replace('index.html'); return; }
-    const { error } = await sb.auth.signInWithPassword({ email: ADMIN_EMAIL, password: pwd });
-    if(error){ alert('كلمة المرور غير صحيحة'); location.replace('index.html'); }
+  const { data: { user } } = await sb.auth.getUser();
+  if (!user) {
+    const email = prompt('الإيميل الإداري:');
+    const pwd   = prompt('كلمة المرور:');
+    if (!email || !pwd) { location.replace('index.html'); return; }
+
+    const { error } = await sb.auth.signInWithPassword({ email, password: pwd });
+    if (error) {
+      alert('فشل تسجيل الدخول: ' + (error.message || 'تحقق من الإيميل/كلمة المرور أو تأكيد البريد'));
+      location.replace('index.html');
+      return;
+    }
   }
 })();
+
 
 setTimeout(()=>document.getElementById('intro')?.classList.add('hide-intro'),1200);
 
@@ -545,28 +553,36 @@ form.onsubmit=async e=>{
     photoUrl = data.publicUrl;
   }
 
-  const obj = {
-    id,
-    name: nameInput.value.trim(),
-    nid: nidInput.value.trim(),
-    rank: rankSelect.value,
-    rank_no: parseInt(rankNoInput.value,10)||1,
-    photo: photoUrl,
-    health_role: healthRole.value || '',
-    specialty: specialty.value || '',
-    cert_heli: !!cert_heli.checked, cert_ops: !!cert_ops.checked, cert_diving: !!cert_diving.checked, cert_boat: !!cert_boat.checked,
-    cert_med_report: !!cert_med_report.checked, cert_fitness: !!cert_fitness.checked, test_specialty: !!test_specialty.checked, test_reports: !!test_reports.checked, test_mountain: !!test_mountain.checked,
-    warnings: currentWarnings,
-    notes: (q('#notes')?.value||'').trim()
-  };
+ const obj = {
+  id,
+  name: nameInput.value.trim(),
+  nid: nidInput.value.trim(),
+  rank: rankSelect.value,
+  rank_no: parseInt(rankNoInput.value, 10) || 1,
+  photo: photoUrl || null,
+  health_role: healthRole.value || '',
+  specialty: specialty.value || '',
+  cert_heli: !!cert_heli.checked,
+  cert_ops: !!cert_ops.checked,
+  cert_diving: !!cert_diving.checked,
+  cert_boat: !!cert_boat.checked,
+  cert_fitness: !!cert_fitness.checked,
+  cert_med_report: !!cert_med_report.checked,
+  test_specialty: !!test_specialty.checked,
+  test_reports: !!test_reports.checked,
+  test_mountain: !!test_mountain.checked,
+  warnings: currentWarnings,
+  notes: (q('#notes')?.value || '').trim()
+};
 
-  const {error} = await sb.from('staff').upsert(obj);
-  if(error){ alert('فشل الحفظ: '+error.message); return; }
+const { error } = await sb.from('staff').upsert(obj);
+if (error) { alert('فشل الحفظ: ' + error.message); return; }
 
-  await Promise.all([
+formDialog.close();
+await load();
     reorderRank(obj.rank),
     oldRank && oldRank!==obj.rank ? reorderRank(oldRank) : Promise.resolve()
-  ]);
+  ;
 
   formDialog.close();
   await load();
