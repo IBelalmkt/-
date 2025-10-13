@@ -7,83 +7,84 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0712; --panel:#0f0b1a; --card:#131020; --muted:#a7a4be; --text:#efecff;
-  --brand:#8b7bff; --accent:#ff6b9e; --ok:#54e6a6; --border:1px solid rgba(255,255,255,.08);
+  --bg1:#080712; --bg2:#0f0b1f;
+  --panel:rgba(17,14,33,.72);
+  --card:rgba(18,16,36,.55);
+  --text:#F2EFFF; --muted:#bfbad8;
+  --chip:#15132a; --chip-br:rgba(255,255,255,.12);
+  --ok:#63e7c4; --info:#75c9ff; --warn:#ffd36e; --danger:#ff8fb7;
+  --border:1px solid rgba(255,255,255,.10);
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
+  margin:0; color:var(--text); font-family:"Cairo",system-ui,Segoe UI,Roboto,Arial,sans-serif;
   background:
-    radial-gradient(900px 500px at 20% -10%, rgba(139,123,255,.10), transparent),
-    radial-gradient(900px 500px at 90% 120%, rgba(84,230,166,.06), transparent),
-    var(--bg);
-  color:var(--text);
-  font-family:"Cairo",sans-serif;
+    radial-gradient(1000px 600px at 12% -10%, rgba(154,134,255,.15), transparent),
+    radial-gradient(900px 600px at 92% 120%, rgba(106,240,194,.10), transparent),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
 }
 
 /* NAV */
-nav{
-  position:sticky;top:0;z-index:50;
-  background:rgba(15,11,26,.78); backdrop-filter:blur(10px);
-  border-bottom:var(--border);
-}
-.nav-in{width:min(1200px,92%);margin:auto;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 0}
+nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(16,12,32,.9),rgba(16,12,32,.65));backdrop-filter:blur(14px);border-bottom:var(--border)}
+.nav-in{width:min(1100px,92%);margin:auto;padding:10px 0;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800}
-.brand .logo{
-  width:36px;height:36px;border-radius:10px;
-  background:url('RTHospital.png') center/cover no-repeat;
-  box-shadow:0 0 0 1px rgba(255,255,255,.1) inset;
-}
-.nav-actions{display:flex;gap:8px}
-.link{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:10px;border:var(--border);background:#171230;color:#e9e9ff;text-decoration:none;font-weight:700;font-size:13px}
+.brand .logo{width:34px;height:34px;border-radius:10px;background:url('RTHospital.png') center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.12) inset}
+.toolbar{display:flex;gap:8px;align-items:center;justify-content:center;background:rgba(18,16,36,.45);border:var(--border);border-radius:12px;padding:6px 8px}
+.toolbar>*{background:#171230;border:var(--border);color:var(--text);border-radius:10px;padding:8px 10px;font-weight:700;font-size:12px}
+.toolbar .refresh{background:linear-gradient(180deg,#2b1e69,#221a51);cursor:pointer;border-color:rgba(154,134,255,.4)}
+.link{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:10px;border:var(--border);background:#171230;color:#e9e9ff;text-decoration:none;font-weight:800;font-size:12px}
+.container{width:min(1100px,92%);margin:18px auto 40px}
 
-/* Toolbar */
-.toolbar{display:flex;gap:8px;align-items:center}
-.toolbar input,.toolbar select,.toolbar button{
-  background:#171230;border:var(--border);color:var(--text);
-  border-radius:10px;padding:8px 10px;font-family:inherit
+/* TIMELINE + CARD (Discord-like) */
+.timeline{position:relative}
+.card{
+  position:relative; overflow:hidden; margin:10px 0; padding:12px 14px 10px;
+  background:var(--card); border:var(--border); border-radius:14px;
+  box-shadow:0 14px 28px rgba(0,0,0,.26);
 }
-.toolbar button{cursor:pointer;font-weight:800}
-.toolbar .refresh{background:#211a48}
+.card::before{ /* شريط جانبي يغيّر لونه حسب العملية */
+  content:""; position:absolute; inset:0 auto 0 0; width:4px; background:var(--info);
+}
+.card[data-op="insert"]::before{ background:var(--ok); }
+.card[data-op="update"]::before{ background:var(--info); }
+.card[data-op="delete"]::before{ background:var(--danger); }
 
-/* content container */
-.container{width:min(1200px,92%);margin:18px auto}
+/* رأس البطاقة */
+.head{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.op-chip{display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border-radius:999px;border:1px solid var(--chip-br);background:#151736;font-weight:900;font-size:12px}
+.op-chip.insert{background:rgba(99,231,196,.14);border-color:rgba(99,231,196,.28);color:#dffdf6}
+.op-chip.update{background:rgba(117,201,255,.14);border-color:rgba(117,201,255,.28);color:#e9f6ff}
+.op-chip.delete{background:rgba(255,143,183,.14);border-color:rgba(255,143,183,.28);color:#ffe6ef}
+.time{padding:3px 8px;border:1px solid var(--chip-br);background:#15122d;border-radius:8px;font-size:12px;color:#dfe7ff}
+.actor{margin-inline-start:auto;display:flex;align-items:center;gap:8px;font-weight:800}
+.avatar{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#1b1533;border:1px solid var(--chip-br);color:#cfe2ff;font-size:11px}
+.count{background:#15122a;border:var(--border);border-radius:999px;padding:2px 8px;font-size:12px;color:#cdd5ff}
 
-/* Cards */
-#logsWrap{display:grid;gap:12px}
-.log-card{
-  background:var(--panel);
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:16px;
-  padding:12px 14px;
-  box-shadow:0 10px 26px rgba(0,0,0,.22);
-}
-.head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13px;color:#cfd6ff}
-.head .time{opacity:.9}
-.head .op{
-  padding:2px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.1);
-  background:#1d1a35;font-weight:800;font-size:12px
-}
-.head .op.update{background:#1c2b4e}
-.head .op.insert{background:#183b2f}
-.head .op.delete{background:#4a1f2e}
-.actor{margin-inline-start:auto;font-weight:700;color:#bfe0ff}
-.target{margin-top:8px;font-size:14px}
+/* هدف العملية (سطر واحد لطيف) */
+.target{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0 6px}
+.badge{background:var(--chip);border:1px solid var(--chip-br);padding:4px 10px;border-radius:999px;font-size:12px;color:#c9c6ee}
 .target b{color:#fff}
-.diffs{margin-top:8px;display:grid;gap:8px}
-.diff{
-  background:#12102a;border:1px solid rgba(255,255,255,.08);
-  border-radius:12px;padding:8px 10px;font-size:13px
-}
-.diff .before{opacity:.75}
-.diff .after{font-weight:800}
-.msg{
-  padding:16px;text-align:center;color:var(--muted);
-  border:1px dashed rgba(255,255,255,.2);border-radius:12px
-}
 
-/* small */
-@media (max-width:600px){
+/* قائمة التغييرات – شكل سطر واحد مثل رسائل الديسكورد */
+.diffs{display:grid;gap:6px}
+.diffline{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(17,15,38,.45); border:1px solid var(--chip-br);
+  border-radius:10px; padding:8px 10px; font-size:13px;
+  /* مهم: نخلي اتجاه السطر LTR عشان السهم يظل يشير من القديم إلى الجديد */
+  direction:ltr;
+}
+.diffline .label{direction:rtl; font-weight:800; color:#e9e6ff; background:var(--chip); border:1px solid var(--chip-br); padding:2px 8px; border-radius:999px}
+.diffline .old{direction:rtl; opacity:.8}
+.diffline .arrow{opacity:.75}
+.diffline .new{direction:rtl; font-weight:800}
+.thumb{width:38px;height:38px;border-radius:8px;object-fit:cover;border:1px solid var(--chip-br);vertical-align:middle}
+
+/* رسائل فارغة / خطأ */
+.msg{padding:16px;text-align:center;color:var(--muted);border:1px dashed rgba(255,255,255,.25);border-radius:12px;background:rgba(18,16,36,.35)}
+
+/* موبايل */
+@media (max-width:640px){
   .nav-in{grid-template-columns:1fr auto}
   .brand{grid-column:1/3}
   .toolbar{flex-wrap:wrap}
@@ -117,19 +118,19 @@ nav{
 </nav>
 
 <main class="container">
-  <div id="logsWrap"></div>
+  <section class="timeline">
+    <div id="logsWrap"></div>
+  </section>
 </main>
 
 <script type="module">
   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-  // بدّل القيم لو لزم
   const sb = createClient(
     "https://kdsnmgfrdykmupnrmksy.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtkc25tZ2ZyZHlrbXVwbnJta3N5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxNTE2NDgsImV4cCI6MjA3NDcyNzY0OH0.Ly_frv4P1P45OYmTEt6hDThSx5rD6S1a96dNKhVc1Yc"
   );
 
-  // عناصر
   const wrap     = document.getElementById("logsWrap");
   const refresh  = document.getElementById("refresh");
   const opFilter = document.getElementById("opFilter");
@@ -137,13 +138,17 @@ nav{
   const fromDate = document.getElementById("from");
   const toDate   = document.getElementById("to");
 
-  // تنسيق وقت السعودية (ميلادي)
   const toKSA = (ts)=>{
-    try{ return new Date(ts).toLocaleString('en-GB',{ timeZone:'Asia/Riyadh' }); }
-    catch{ return ts; }
+    try{
+      return new Date(ts).toLocaleString('en-GB',{
+        timeZone:'Asia/Riyadh',
+        year:'numeric', month:'2-digit', day:'2-digit',
+        hour:'2-digit', minute:'2-digit', second:'2-digit'
+      });
+    }catch{ return ts; }
   };
 
-  // تسميات الحقول
+  const rankLabel = r => ({A:'مسؤول',V:'نائب',AD:'استشاري',DS:'أخصائي',D:'دكتور',DA:'مساعد دكتور',N:'ممرض',T:'متدرب',C:'متطوع'})[r]||r;
   const labelMap = {
     name:'الاسم', nid:'الرقم الوطني', rank:'الرتبة', rank_no:'التسلسل',
     health_role:'الدور الصحي', specialty:'التخصص', warnings:'الإنذارات',
@@ -154,31 +159,77 @@ nav{
   };
   const label = k => labelMap[k] || k;
 
-  const diffRow = d=>{
-    const k = d.key || '';
-    const before = (d.before===null||d.before===undefined) ? '—' : d.before;
-    const after  = (d.after===null||d.after===undefined)  ? '—' : d.after;
-    return `<div class="diff"><b>${label(k)}</b> : <span class="before">${before}</span> → <span class="after">${after}</span></div>`;
+  const isBool = v => v === true || v === false;
+
+  // نعرّف "صورة" حتى لو رابط سوپابيز بلا امتداد
+  const looksLikeImage = (v, key) => {
+    if (key === 'photo' && typeof v === 'string') return true;
+    if (typeof v !== 'string') return false;
+    const http = /^https?:\/\//i.test(v);
+    const ext  = /\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(v);
+    const supa = v.includes('/storage/v1/object/') || v.includes('/object/public/');
+    return http && (ext || supa);
   };
 
-  const card = row=>{
-    const diffs = Array.isArray(row.diffs) ? row.diffs : (row.diffs || []);
-    const target = row.target_name || row.staff_id || '—';
-    return `
-      <article class="log-card">
-        <div class="head">
-          <span class="time">${toKSA(row.created_at)}</span>
-          <span class="op ${row.op}">${row.op}</span>
-          <span class="actor">${row.actor_email || '—'}</span>
-        </div>
-        <div class="target">المستهدف: <b>${target}</b></div>
-        ${diffs.length ? `<div class="diffs">${diffs.map(diffRow).join('')}</div>` : ''}
-      </article>
-    `;
+  const esc = s => String(s)
+      .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+      .replaceAll('"','&quot;').replaceAll("'","&#39;");
+
+  const initials = (txt)=>{
+    const s=(txt||'').trim(); if(!s) return '👤';
+    const at = s.includes('@') ? s.split('@')[0] : s;
+    const parts = at.split(/[.\s_-]+/).filter(Boolean);
+    return (parts[0]?.[0]||'').toUpperCase() + (parts[1]?.[0]||'').toUpperCase();
   };
+
+  // تنسيق القيم داخل السطر
+  function fmt(val, key){
+    if (val === null || val === undefined || val === '') return '<span class="old">—</span>';
+    if (key === 'rank') return `<span class="old">${esc(rankLabel(val))}</span>`;
+    if (isBool(val)) return `<span class="old">${val?'مفعّل':'غير مفعّل'}</span>`;
+    if (looksLikeImage(val, key)) return `<img class="thumb" src="${esc(String(val))}" alt="img">`;
+    return `<span class="old">${esc(String(val))}</span>`;
+  }
+
+  // عنصر سطر تغيير (مضغوط – مثل ديسكورد)
+  function diffLine(d){
+    const k = d.key || '';
+    return `
+      <div class="diffline">
+        <span class="label">${esc(label(k))}</span>
+        <span class="old">${fmt(d.before,k)}</span>
+        <span class="arrow">→</span>
+        <span class="new"><b>${fmt(d.after,k).replace('class="old"','')}</b></span>
+      </div>`;
+  }
+
+  function card(row){
+    const diffs = Array.isArray(row.diffs) ? row.diffs : (row.diffs || []);
+    const count = diffs.length;
+    const actor = row.actor_email || '—';
+    const targetName = row.target_name || '—';
+    const targetId   = row.staff_id ? `#${row.staff_id}` : '';
+
+    return `
+      <article class="card" data-op="${row.op}">
+        <div class="head">
+          <span class="op-chip ${row.op}">${row.op}</span>
+          <span class="time">${toKSA(row.created_at)}</span>
+          <span class="actor"><span class="avatar">${initials(actor)}</span>${esc(actor)}</span>
+          ${count?`<span class="count">${count}</span>`:''}
+        </div>
+
+        <div class="target">
+          <span class="badge">المستهدف</span>
+          <b>${esc(targetName)}</b>
+          
+        </div>
+
+        ${count?`<div class="diffs">${diffs.map(diffLine).join('')}</div>`:`<div class="msg">تمت ازالته</div>`}
+      </article>`;
+  }
 
   async function load(){
-    if(!wrap) return;
     wrap.innerHTML = `<div class="msg">... تحميل</div>`;
 
     let q = sb.from('staff_logs')
@@ -187,37 +238,25 @@ nav{
       .limit(500);
 
     if(opFilter.value !== 'all') q = q.eq('op', opFilter.value);
-
-    if(fromDate.value){
-      const fromIso = new Date(fromDate.value).toISOString();
-      q = q.gte('created_at', fromIso);
-    }
-    if(toDate.value){
-      const t = new Date(toDate.value); t.setDate(t.getDate()+1);
-      q = q.lt('created_at', t.toISOString());
-    }
+    if(fromDate.value){ q = q.gte('created_at', new Date(fromDate.value).toISOString()); }
+    if(toDate.value){ const t=new Date(toDate.value); t.setDate(t.getDate()+1); q = q.lt('created_at', t.toISOString()); }
     if(search.value.trim()){
       const s = search.value.trim();
-      q = q.or(`target_name.ilike.%${s}%,actor_email.ilike.%${s}%`);
+      q = q.or(`target_name.ilike.%${s}%,actor_email.ilike.%${s}%,staff_id.ilike.%${s}%`);
     }
 
     const { data, error } = await q;
-    if(error){ wrap.innerHTML = `<div class="msg">فشل جلب اللوقات: ${error.message}</div>`; return; }
-    wrap.innerHTML = data.length ? data.map(card).join('') : `<div class="msg">لا توجد سجلات.</div>`;
+    if(error){ wrap.innerHTML = `<div class="msg">فشل جلب اللوقات: ${esc(error.message)}</div>`; return; }
+    wrap.innerHTML = (data && data.length) ? data.map(card).join('') : `<div class="msg">لا توجد سجلات.</div>`;
   }
 
   refresh.addEventListener('click', load);
-  [opFilter, search, fromDate, toDate].forEach(el=> el.addEventListener('input', load));
+  [opFilter, fromDate, toDate].forEach(el=> el.addEventListener('change', load));
+  search.addEventListener('input', ()=>{ clearTimeout(window.__t); window.__t=setTimeout(load,220); });
 
-  // بثّ حي
-  sb.channel('staff-logs-rt')
-    .on('postgres_changes', {event:'*', schema:'public', table:'staff_logs'}, load)
-    .subscribe();
+  sb.channel('staff-logs-rt').on('postgres_changes',{event:'*',schema:'public',table:'staff_logs'},load).subscribe();
 
-  // أول تحميل
   await load();
 </script>
 </body>
 </html>
-
-
