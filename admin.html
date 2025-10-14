@@ -270,7 +270,7 @@ dialog .btn.primary{ background:#211a48 !important; }
         <label class="check"><input type="checkbox" id="test_specialty"><span>اختبار بالتخصص</span></label>
         <label class="check"><input type="checkbox" id="test_reports"><span>اختبارات تقارير</span></label>
         <label class="check"><input type="checkbox" id="test_mountain"><span>اختبار الجبال</span></label>
-         <label class="check"><input type="checkbox" id="test_mountain"><span>اختبار القيادة</span></label>
+      
       </div>
     </fieldset>
 
@@ -373,7 +373,7 @@ const certList = x=>{
   if(x.test_specialty) a.push({t:'اختبار بالتخصص'});
   if(x.test_reports) a.push({t:'اختبارات تقارير'});
   if(x.test_mountain) a.push({t:'اختبار الجبال'});
-  if(x.test_drive) a.push({t:'اختبار القيادة});
+ 
   return a;
 };
 const warnsHTML = n=> new Array(3).fill(0).map((_,i)=>`<span class="w ${n>i?'active':''}"></span>`).join('');
@@ -619,6 +619,7 @@ await load();
 </script>
 </body>
 </html>
+
 
 
 
