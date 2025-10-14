@@ -373,6 +373,7 @@ const certList = x=>{
   if(x.test_specialty) a.push({t:'اختبار بالتخصص'});
   if(x.test_reports) a.push({t:'اختبارات تقارير'});
   if(x.test_mountain) a.push({t:'اختبار الجبال'});
+  if(x.test_mountain) a.push({t:'اختبار القيادة});
   return a;
 };
 const warnsHTML = n=> new Array(3).fill(0).map((_,i)=>`<span class="w ${n>i?'active':''}"></span>`).join('');
@@ -618,4 +619,5 @@ await load();
 </script>
 </body>
 </html>
+
 
