@@ -24,7 +24,7 @@ body{
     linear-gradient(180deg,var(--bg1),var(--bg2));
 }
 
-/* NAV */
+
 nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(16,12,32,.9),rgba(16,12,32,.65));backdrop-filter:blur(14px);border-bottom:var(--border)}
 .nav-in{width:min(1100px,92%);margin:auto;padding:10px 0;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800}
@@ -35,21 +35,21 @@ nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(16,1
 .link{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:10px;border:var(--border);background:#171230;color:#e9e9ff;text-decoration:none;font-weight:800;font-size:12px}
 .container{width:min(1100px,92%);margin:18px auto 40px}
 
-/* TIMELINE + CARD (Discord-like) */
+
 .timeline{position:relative}
 .card{
   position:relative; overflow:hidden; margin:10px 0; padding:12px 14px 10px;
   background:var(--card); border:var(--border); border-radius:14px;
   box-shadow:0 14px 28px rgba(0,0,0,.26);
 }
-.card::before{ /* شريط جانبي يغيّر لونه حسب العملية */
+.card::before{
   content:""; position:absolute; inset:0 auto 0 0; width:4px; background:var(--info);
 }
 .card[data-op="insert"]::before{ background:var(--ok); }
 .card[data-op="update"]::before{ background:var(--info); }
 .card[data-op="delete"]::before{ background:var(--danger); }
 
-/* رأس البطاقة */
+
 .head{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .op-chip{display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border-radius:999px;border:1px solid var(--chip-br);background:#151736;font-weight:900;font-size:12px}
 .op-chip.insert{background:rgba(99,231,196,.14);border-color:rgba(99,231,196,.28);color:#dffdf6}
@@ -60,18 +60,18 @@ nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(16,1
 .avatar{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#1b1533;border:1px solid var(--chip-br);color:#cfe2ff;font-size:11px}
 .count{background:#15122a;border:var(--border);border-radius:999px;padding:2px 8px;font-size:12px;color:#cdd5ff}
 
-/* هدف العملية (سطر واحد لطيف) */
+
 .target{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0 6px}
 .badge{background:var(--chip);border:1px solid var(--chip-br);padding:4px 10px;border-radius:999px;font-size:12px;color:#c9c6ee}
 .target b{color:#fff}
 
-/* قائمة التغييرات – شكل سطر واحد مثل رسائل الديسكورد */
+
 .diffs{display:grid;gap:6px}
 .diffline{
   display:flex;align-items:center;gap:10px;
   background:rgba(17,15,38,.45); border:1px solid var(--chip-br);
   border-radius:10px; padding:8px 10px; font-size:13px;
-  /* مهم: نخلي اتجاه السطر LTR عشان السهم يظل يشير من القديم إلى الجديد */
+  
   direction:ltr;
 }
 .diffline .label{direction:rtl; font-weight:800; color:#e9e6ff; background:var(--chip); border:1px solid var(--chip-br); padding:2px 8px; border-radius:999px}
@@ -80,10 +80,10 @@ nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(16,1
 .diffline .new{direction:rtl; font-weight:800}
 .thumb{width:38px;height:38px;border-radius:8px;object-fit:cover;border:1px solid var(--chip-br);vertical-align:middle}
 
-/* رسائل فارغة / خطأ */
+
 .msg{padding:16px;text-align:center;color:var(--muted);border:1px dashed rgba(255,255,255,.25);border-radius:12px;background:rgba(18,16,36,.35)}
 
-/* موبايل */
+
 @media (max-width:640px){
   .nav-in{grid-template-columns:1fr auto}
   .brand{grid-column:1/3}
@@ -155,13 +155,14 @@ nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(16,1
     photo:'الصورة', notes:'الملاحظات',
     cert_heli:'شهادة هليكوبتر', cert_ops:'شهادة عمليات', cert_diving:'شهادة غوص',
     cert_boat:'شهادة قيادة قارب', cert_fitness:'تقرير فحص لياقة', cert_med_report:'تقارير طبية',
-    test_specialty:'اختبار بالتخصص', test_reports:'اختبارات تقارير', test_mountain:'اختبار الجبال'
+    test_specialty:'اختبار بالتخصص', test_reports:'اختبارات تقارير', test_mountain:'اختبار الجبال', test_simulation: 'اختبار محاكاة',
+
   };
   const label = k => labelMap[k] || k;
 
   const isBool = v => v === true || v === false;
 
-  // نعرّف "صورة" حتى لو رابط سوپابيز بلا امتداد
+  
   const looksLikeImage = (v, key) => {
     if (key === 'photo' && typeof v === 'string') return true;
     if (typeof v !== 'string') return false;
@@ -182,7 +183,7 @@ nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(16,1
     return (parts[0]?.[0]||'').toUpperCase() + (parts[1]?.[0]||'').toUpperCase();
   };
 
-  // تنسيق القيم داخل السطر
+
   function fmt(val, key){
     if (val === null || val === undefined || val === '') return '<span class="old">—</span>';
     if (key === 'rank') return `<span class="old">${esc(rankLabel(val))}</span>`;
@@ -191,7 +192,7 @@ nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(16,1
     return `<span class="old">${esc(String(val))}</span>`;
   }
 
-  // عنصر سطر تغيير (مضغوط – مثل ديسكورد)
+ 
   function diffLine(d){
     const k = d.key || '';
     return `
