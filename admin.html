@@ -254,7 +254,7 @@ dialog .btn.primary{ background:#211a48 !important; }
           <option>علاج طبيعي</option>
           <option>تأهيل</option>
           <option>علم نفس</option>
-            <option>جراحة عظام و علاج طبيعي</option>
+          <option>جراحة عظام و علاج طبيعي</option>
           <option>جراحة عامة و طب جنائي</option>
         </select>
       </div>
@@ -272,7 +272,8 @@ dialog .btn.primary{ background:#211a48 !important; }
         <label class="check"><input type="checkbox" id="test_specialty"><span>اختبار بالتخصص</span></label>
         <label class="check"><input type="checkbox" id="test_reports"><span>اختبارات تقارير</span></label>
         <label class="check"><input type="checkbox" id="test_mountain"><span>اختبار الجبال</span></label>
-      
+        <label class="check"><input type="checkbox" id="test_simulation"><span>اختبار محاكاة</span></label>
+
       </div>
     </fieldset>
 
@@ -348,6 +349,7 @@ const healthRole=q('#healthRole'), specialty=q('#specialty');
 
 const cert_heli=q('#cert_heli'), cert_ops=q('#cert_ops'), cert_diving=q('#cert_diving'), cert_boat=q('#cert_boat');
 const cert_med_report=q('#cert_med_report'), cert_fitness=q('#cert_fitness'), test_specialty=q('#test_specialty'), test_reports=q('#test_reports'), test_mountain=q('#test_mountain');
+const test_simulation = q('#test_simulation');
 
 const warnSelect=q('#warnSelect'); let currentWarnings=0;
 q('#cancelBtn').onclick=()=>formDialog.close();
@@ -375,7 +377,8 @@ const certList = x=>{
   if(x.test_specialty) a.push({t:'اختبار بالتخصص'});
   if(x.test_reports) a.push({t:'اختبارات تقارير'});
   if(x.test_mountain) a.push({t:'اختبار الجبال'});
- 
+  if(x.test_simulation) a.push({ t: 'اختبار محاكاة' });
+
   return a;
 };
 const warnsHTML = n=> new Array(3).fill(0).map((_,i)=>`<span class="w ${n>i?'active':''}"></span>`).join('');
@@ -575,6 +578,9 @@ form.onsubmit=async e=>{
   test_specialty: !!test_specialty.checked,
   test_reports: !!test_reports.checked,
   test_mountain: !!test_mountain.checked,
+  test_simulation: !!test_simulation.checked,
+
+
   warnings: currentWarnings,
   notes: (q('#notes')?.value || '').trim()
 };
@@ -621,8 +627,3 @@ await load();
 </script>
 </body>
 </html>
-
-
-
-
-
