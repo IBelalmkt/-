@@ -493,7 +493,8 @@ window.openForm = function(item){
     rankSelect.value=item.rank||'A'; rankNoInput.value=item.rank_no||1; photoPreview.src=item.photo||'';
     healthRole.value=item.health_role||''; specialty.value=item.specialty||'';
     cert_heli.checked=!!item.cert_heli; cert_ops.checked=!!item.cert_ops; cert_diving.checked=!!item.cert_diving; cert_boat.checked=!!item.cert_boat;
-    cert_med_report.checked=!!item.cert_med_report; cert_fitness.checked=!!item.cert_fitness; test_specialty.checked=!!item.test_specialty; test_reports.checked=!!item.test_reports; test_mountain.checked=!!item.test_mountain;
+    cert_med_report.checked=!!item.cert_med_report; cert_fitness.checked=!!item.cert_fitness; test_specialty.checked=!!item.test_specialty; test_reports.checked=!!item.test_reports; test_mountain.checked=!!item.test_mountain; test_simulation.checked = !!item.test_simulation;
+
     currentWarnings=item.warnings||0; for(let i=0;i<=currentWarnings;i++) warnSelect.querySelector(`[data-v="${i}"]`)?.classList.add('active');
     (q('#notes')).value=item.notes||'';
   }
@@ -627,3 +628,4 @@ await load();
 </script>
 </body>
 </html>
+
