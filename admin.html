@@ -12,11 +12,28 @@
   --cyan:#7fd8ff;
 }
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(1000px 500px at 20% -10%, rgba(139,123,255,.11), transparent), var(--bg); color:var(--text); font-family:"Cairo",sans-serif}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(1000px 500px at 20% -10%, rgba(139,123,255,.11), transparent),
+    radial-gradient(1000px 700px at 100% 120%, rgba(113,216,255,.10), transparent),
+    var(--bg);
+  color:var(--text);
+  font-family:"Cairo",sans-serif;
+}
 .container{width:min(1200px,92%);margin:auto}
 
+/* modern scrollbar */
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:#070512;}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,#8b7bff,#54e6a6);
+  border-radius:999px;
+}
+
 /* Intro */
-#intro{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0b0613 0%,#120c1f 70%);}
+#intro{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at top,#15102b 0,#070414 55%,#05030b 100%);}
 .intro-box{display:grid;place-items:center;gap:8px;text-align:center;animation:fadeUp .7s ease both}
 .intro-logo{width:110px;height:110px;border-radius:28px;background:url('RTHospital.png') center/cover no-repeat;box-shadow:0 10px 40px rgba(139,123,255,.35);animation:pulse 1.8s ease-in-out infinite}
 .intro-title{font-size:22px;font-weight:800}
@@ -27,11 +44,11 @@ body{margin:0;background:radial-gradient(1000px 500px at 20% -10%, rgba(139,123,
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filter:blur(10px);border-bottom:var(--border)}
-.nav-in{display:flex;align-items:center;gap:12px;padding:12px 0}
+nav{position:sticky;top:0;z-index:30;background:rgba(10,7,20,.86);backdrop-filter:blur(16px);border-bottom:var(--border);box-shadow:0 10px 40px rgba(0,0,0,.45)}
+.nav-in{display:flex;align-items:center;gap:12px;padding:10px 0}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800}
-.brand .logo{width:34px;height:34px;border-radius:10px;background:url('RTHospital.png') center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.09) inset}
-.search{flex:1;display:flex;align-items:center;background:#17132c;border:var(--border);border-radius:12px;padding:8px 12px}
+.brand .logo{width:34px;height:34px;border-radius:10px;background:url('RTHospital.png') center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.14) inset}
+.search{flex:1;display:flex;align-items:center;background:#17132c;border:var(--border);border-radius:12px;padding:8px 12px;box-shadow:0 0 0 1px rgba(139,123,255,.15)}
 .search input{all:unset;flex:1;color:var(--text);}
 .actions{display:flex;gap:8px;margin-inline-start:auto}
 .btn{padding:10px 12px;border-radius:12px;border:var(--border);background:#1a1531;color:var(--text);font-weight:700;cursor:pointer}
@@ -54,7 +71,7 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 
 /* فلتر مطابق للـindex */
 .filter-wrap{position:relative}
-.filter-panel{position:absolute;right:0;top:42px;width:260px;background:#0f0b1a;border:var(--border);border-radius:14px;padding:10px;display:none;z-index:40}
+.filter-panel{position:absolute;right:0;top:42px;width:260px;background:#0f0b1a;border:var(--border);border-radius:14px;padding:10px;display:none;z-index:40;box-shadow:0 18px 40px rgba(0,0,0,.7)}
 .filter-panel.open{display:block}
 .filter-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
 .filter-panel label{
@@ -72,27 +89,107 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 .row-V{justify-content:center}
 
 /* CARD */
-.card{position:relative;background:rgba(25,18,38,.6);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;width:260px;box-shadow:0 8px 28px rgba(139,92,246,.10)}
-.card .media{display:grid;place-items:center;padding:14px 0 6px}
-.card .avatar{width:88px;height:88px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.1);box-shadow:0 0 0 4px rgba(255,255,255,.05)}
-.card .content{padding:10px 12px;display:grid;gap:6px}
+.card{
+  position:relative;
+  background:rgba(25,18,38,.78);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  width:260px;
+  box-shadow:0 12px 32px rgba(5,3,15,.9);
+  cursor:pointer;
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    border-color .18s ease,
+    background .18s ease;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:conic-gradient(from 220deg,rgba(139,123,255,.18),transparent,rgba(84,230,166,.16),transparent);
+  opacity:0;
+  transition:opacity .25s ease;
+}
+.card:hover{
+  transform:translateY(-4px) scale(1.02);
+  box-shadow:0 24px 50px rgba(0,0,0,.85);
+  border-color:rgba(143,130,255,.7);
+  background:
+    radial-gradient(circle at top,rgba(139,123,255,.12),transparent 55%),
+    rgba(11,8,26,.98);
+}
+.card:hover::before{opacity:1;}
+.card.expanded{
+  transform:translateY(-2px) scale(1.03);
+  box-shadow:0 28px 70px rgba(0,0,0,.9);
+}
+
+.card .media{display:grid;place-items:center;padding:16px 0 8px}
+.card .avatar{width:88px;height:88px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.15);box-shadow:0 0 0 4px rgba(255,255,255,.06)}
+.card .content{padding:10px 12px 12px;display:grid;gap:6px;position:relative;z-index:1}
 .card .title{font-size:15px;font-weight:800}
 .card .meta{font-size:12px;color:#aeb6c7;display:grid;gap:2px}
 .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;line-height:1;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#cfd6e6}
 .pill.heli{border-color:#ff6b6b;color:#ff9aa2;background:rgba(255,107,107,.12)}
-.rank-badge{position:absolute;inset:8px 8px auto auto;background:#281f4e;border:1px solid rgba(255,255,255,.12);color:#fff;padding:4px 8px;border-radius:999px;font-size:12px}
+.rank-badge{position:absolute;inset:8px 8px auto auto;background:linear-gradient(135deg,#312467,#1a133b);border:1px solid rgba(255,255,255,.18);color:#fff;padding:4px 8px;border-radius:999px;font-size:12px;z-index:1}
 
 /* badges */
-.health-badge{position:absolute;inset:8px auto auto 8px;background:rgba(127,216,255,.14);color:#bfeaff;border:1px solid rgba(127,216,255,.35);padding:4px 8px;border-radius:999px;font-size:12px}
+.health-badge{position:absolute;inset:8px auto auto 8px;background:rgba(127,216,255,.18);color:#bfeaff;border:1px solid rgba(127,216,255,.4);padding:4px 8px;border-radius:999px;font-size:12px;z-index:1}
 
 /* warns */
-.warns{position:absolute;bottom:12px;left:12px;display:flex;gap:6px}
+.warns{position:absolute;bottom:12px;left:12px;display:flex;gap:6px;z-index:1}
 .warns .w{width:8px;height:8px;border-radius:50%;background:#3a3a50;border:1px solid rgba(255,255,255,.12)}
 .warns .w.active{background:#ff9aa9}
 
+/* copy chip on hover */
+.copy-floating{
+  position:absolute;
+  inset:44px auto auto 10px; /* فوق شوي تحت الهيلث بادج */
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(17,13,40,.96);
+  color:#f3f0ff;
+  font-size:11px;
+  cursor:pointer;
+  box-shadow:0 10px 26px rgba(0,0,0,.7);
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(4px);
+  transition:.18s ease;
+  z-index:3;
+}
+.copy-floating .cf-icon{font-size:14px;}
+.card:hover .copy-floating{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
 /* dialog & form */
-dialog{border:none;border-radius:16px;background:#120d1f;color:var(--text);width:min(720px,94%);max-height:90vh;padding:16px}
+dialog{
+  border:none;
+  border-radius:18px;
+  background:radial-gradient(circle at top,#181331 0,#0c0818 55%,#070313 100%);
+  color:var(--text);
+  width:min(720px,94%);
+  max-height:90vh;
+  padding:16px;
+  box-shadow:0 24px 60px rgba(0,0,0,.95);
+  animation:fadeUp .18s ease-out;
+}
+dialog::backdrop{
+  background:rgba(2,0,10,.65);
+  backdrop-filter:blur(8px);
+}
 fieldset{border:var(--border);border-radius:14px;padding:14px;margin:8px 0 14px}
 legend{color:var(--muted);font-size:13px;padding:0 6px}
 .preview{display:flex;gap:12px;align-items:center;border:1px dashed rgba(255,255,255,.15);border-radius:12px;padding:10px;background:#141129}
@@ -109,6 +206,44 @@ textarea{min-height:90px}
 .warn-select .warn-dot.active{background:#2c1f55;box-shadow:0 0 0 1px rgba(139,123,255,.25) inset}
 dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
 
+/* COPY ID row */
+.copy-row{
+  margin-top:8px;
+  display:flex;
+  gap:10px;
+}
+.copy-row .copy-box{
+  flex:1;
+}
+.copy-input-wrap{
+  position:relative;
+  width:100%;
+}
+.copy-input-wrap input{
+  padding-inline-start:10px;
+  padding-inline-end:42px; /* مساحة للأيقونة */
+}
+.copy-icon-btn{
+  position:absolute;
+  inset-inline-end:6px;
+  top:50%;
+  transform:translateY(-50%);
+  width:30px;
+  height:30px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.18);
+  background:linear-gradient(135deg,#231a4a,#181331);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  font-size:14px;
+  color:#f1edff;
+  box-shadow:0 4px 12px rgba(0,0,0,.55);
+}
+.copy-icon-btn span{
+  display:inline-block;
+}
+
 /* Mobile */
 @media (max-width: 520px){
   .card{width:220px}
@@ -116,6 +251,8 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
   .rank-badge,.health-badge{font-size:11px;padding:3px 8px}
   .pill{font-size:10px;padding:5px 8px}
 }
+
+/* buttons override */
 .btn{
   background:#1a1531 !important;
   color:var(--text) !important;
@@ -133,7 +270,7 @@ dialog .btn{padding:8px 12px;border-radius:10px;font-size:12px}
 .btn:active{ transform:translateY(0); }
 
 .actions .btn{ box-shadow:0 6px 16px rgba(139,123,255,.12); }
-.card .btn{ background:#1a1531 !important; }
+.card .btn{ background:#1a1531 !important; cursor:pointer; }
 .card .btn.danger{ background:#361b2a !important; }
 dialog .btn{ background:#1a1531 !important; }
 dialog .btn.primary{ background:#211a48 !important; }
@@ -163,7 +300,7 @@ dialog .btn.primary{ background:#211a48 !important; }
       <button id="addBtn" class="btn primary">اضافة</button>
       <button id="reindexBtn" class="btn">تحديث الاكواد</button>
       <a class="link-chip" href="promotion.html"><span class="ico">⬈</span><span>متطلبات الترقية</span></a>
-<a href="logs-hospital.html" class="btn">logs</a>
+      <a href="logs-hospital.html" class="btn">logs</a>
 
       <div class="filter-wrap">
         <button id="openFilters" class="icon-btn" aria-label="فلترة">
@@ -252,7 +389,7 @@ dialog .btn.primary{ background:#211a48 !important; }
           <option>أشعة و عظام</option>
           <option>مختبرات</option>
           <option>علاج طبيعي</option>
-          <option>بروفيسور في علم النفس<option>
+          <option>بروفيسور في علم النفس</option>
           <option>استشاري في علم نفس</option> 
           <option>جراحة عظام و علاج طبيعي</option>
           <option>جراحة عامة و طب جنائي</option>
@@ -273,7 +410,6 @@ dialog .btn.primary{ background:#211a48 !important; }
         <label class="check"><input type="checkbox" id="test_reports"><span>اختبارات تقارير</span></label>
         <label class="check"><input type="checkbox" id="test_mountain"><span>اختبار الجبال</span></label>
         <label class="check"><input type="checkbox" id="test_simulation"><span>اختبار محاكاة</span></label>
-
       </div>
     </fieldset>
 
@@ -285,9 +421,28 @@ dialog .btn.primary{ background:#211a48 !important; }
       </div>
     </div>
 
-    <div><label>ملاحظات</label><textarea id="notes" rows="3"></textarea></div>
+    <div>
+      <label>ملاحظات</label>
+      <textarea id="notes" rows="3"></textarea>
+      <!-- شريط COPY ID -->
+      <div class="copy-row">
+        <!-- مربع الرقم (يمين في RTL) -->
+        <div class="copy-box">
+          <div class="copy-input-wrap">
+            <input id="copyValue" placeholder="الرقم">
+            <button type="button" class="copy-icon-btn" id="copyBtn" title="نسخ">
+              <span>📋</span>
+            </button>
+          </div>
+        </div>
+        <!-- الكلمة / الليبل (يسار) -->
+        <div class="copy-box">
+          <input id="copyLabel" placeholder="مثال: COPY ID">
+        </div>
+      </div>
+    </div>
 
-    <div style="display:flex;gap:8px;justify-content:flex-end">
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
       <button type="button" class="btn" id="cancelBtn">إلغاء</button>
       <button type="submit" class="btn primary">حفظ</button>
     </div>
@@ -307,7 +462,12 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const BUCKET = "photos";
 
-
+const esc = s => String(s)
+  .replace(/&/g,'&amp;')
+  .replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;')
+  .replace(/"/g,'&quot;')
+  .replace(/'/g,'&#39;');
 
 const org = document.getElementById('org');
 const statTotal = document.getElementById('statTotal');
@@ -335,7 +495,6 @@ document.getElementById('year').textContent = new Date().getFullYear();
   }
 })();
 
-
 setTimeout(()=>document.getElementById('intro')?.classList.add('hide-intro'),1200);
 
 const rankOrder = ['A','V','AD','DS','D','DA','N','T','C'];
@@ -352,6 +511,11 @@ const cert_med_report=q('#cert_med_report'), cert_fitness=q('#cert_fitness'), te
 const test_simulation = q('#test_simulation');
 
 const warnSelect=q('#warnSelect'); let currentWarnings=0;
+const notesInput = q('#notes');
+const copyLabelInput = q('#copyLabel');
+const copyValueInput = q('#copyValue');
+const copyBtn = q('#copyBtn');
+
 q('#cancelBtn').onclick=()=>formDialog.close();
 
 let ALL=[];
@@ -364,6 +528,22 @@ warnSelect.querySelectorAll('.warn-dot').forEach(d=>{
     for(let i=0;i<=currentWarnings;i++) warnSelect.querySelector(`[data-v="${i}"]`)?.classList.add('active');
   };
 });
+
+function handleCopy(value, iconEl){
+  if(!value) return;
+  navigator.clipboard.writeText(value).then(()=>{
+    if(iconEl){
+      iconEl.textContent = '✅';
+      setTimeout(()=>iconEl.textContent='📋',900);
+    }
+  }).catch(()=>{
+    alert('ماقدر ينسخ، انسخ يدويًا.');
+  });
+}
+
+copyBtn.onclick = ()=>{
+  handleCopy(copyValueInput.value, copyBtn.firstElementChild);
+};
 
 const pill = (t, cls='')=>`<span class="pill ${cls}">${t}</span>`;
 const certList = x=>{
@@ -378,10 +558,23 @@ const certList = x=>{
   if(x.test_reports) a.push({t:'اختبارات تقارير'});
   if(x.test_mountain) a.push({t:'اختبار الجبال'});
   if(x.test_simulation) a.push({ t: 'اختبار محاكاة' });
-
   return a;
 };
 const warnsHTML = n=> new Array(3).fill(0).map((_,i)=>`<span class="w ${n>i?'active':''}"></span>`).join('');
+
+/* قراءة COPY ID من الملاحظات */
+function parseCopyMeta(notes){
+  const full = notes || '';
+  if(!full) return {label:'',value:'',rest:''};
+  const lines = full.split('\n');
+  const first = lines[0] || '';
+  const rest = lines.slice(1).join('\n').trim();
+  const m = first.match(/^([^:]{1,40}):\s*(.+)$/);
+  if(m){
+    return {label:m[1].trim(), value:m[2].trim(), rest};
+  }
+  return {label:'', value:'', rest:full};
+}
 
 window.__edit=id=>window.openForm(ALL.find(x=>x.id===id));
 window.__del=async id=>{
@@ -395,10 +588,19 @@ window.__del=async id=>{
 function cardHTML(x){
   const certs = certList(x).map(c=>pill(c.t, c.cls||'')).join('');
   const health = x.health_role ? `<div class="health-badge">${x.health_role}</div>` : '';
+  const meta = parseCopyMeta(x.notes || '');
+  const hasCopy = !!meta.value;
+  const labelText = meta.label || 'COPY ID';
+
   return `
   <article class="card">
     <div class="rank-badge">${x.rank}-${x.rank_no}</div>
     ${health}
+    ${hasCopy ? `
+      <button class="copy-floating" data-val="${esc(meta.value)}">
+        <span>${esc(labelText)}</span>
+        <span class="cf-icon">📋</span>
+      </button>` : ''}
     <div class="media"><img class="avatar" src="${x.photo||''}" alt="${x.name||''}"></div>
     <div class="content">
       <div class="title">${x.name||'بدون اسم'}</div>
@@ -409,12 +611,30 @@ function cardHTML(x){
       </div>
       <div class="pills">${certs}</div>
     </div>
-    <div class="card-actions" style="display:flex;gap:8px;padding:8px 12px;border-top:1px solid rgba(255,255,255,.06);background:#0f0b1a">
+    <div class="card-actions" style="display:flex;gap:8px;padding:8px 12px;border-top:1px solid rgba(255,255,255,.06);background:#0f0b1a;position:relative;z-index:2">
       <button class="btn" onclick="window.__edit('${x.id}')">تعديل</button>
       <button class="btn danger" onclick="window.__del('${x.id}')">حذف</button>
     </div>
     <div class="warns">${warnsHTML(x.warnings||0)}</div>
   </article>`;
+}
+
+function attachCardInteractions(){
+  org.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click',e=>{
+      if(e.target.closest('.card-actions')) return;
+      card.classList.toggle('expanded');
+    });
+  });
+
+  org.querySelectorAll('.copy-floating').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const v = btn.dataset.val || '';
+      const icon = btn.querySelector('.cf-icon');
+      handleCopy(v, icon);
+    });
+  });
 }
 
 function render(){
@@ -443,6 +663,8 @@ function render(){
     const el = document.getElementById('cnt'+r) || document.getElementById('cnt'+(r==='AD'?'AD':r));
     if(el) el.textContent = counts[r]||0;
   }
+
+  attachCardInteractions();
 }
 
 function countByRank(data){
@@ -487,6 +709,9 @@ document.addEventListener('click', (e)=>{
 window.openForm = function(item){
   form.reset(); photoPreview.src=''; editId.value=''; currentWarnings=0;
   warnSelect.querySelectorAll('.warn-dot').forEach(x=>x.classList.remove('active'));
+  notesInput.value = '';
+  copyLabelInput.value = '';
+  copyValueInput.value = '';
 
   if(item){
     editId.value=item.id; nameInput.value=item.name||''; nidInput.value=item.nid||'';
@@ -495,8 +720,13 @@ window.openForm = function(item){
     cert_heli.checked=!!item.cert_heli; cert_ops.checked=!!item.cert_ops; cert_diving.checked=!!item.cert_diving; cert_boat.checked=!!item.cert_boat;
     cert_med_report.checked=!!item.cert_med_report; cert_fitness.checked=!!item.cert_fitness; test_specialty.checked=!!item.test_specialty; test_reports.checked=!!item.test_reports; test_mountain.checked=!!item.test_mountain; test_simulation.checked = !!item.test_simulation;
 
-    currentWarnings=item.warnings||0; for(let i=0;i<=currentWarnings;i++) warnSelect.querySelector(`[data-v="${i}"]`)?.classList.add('active');
-    (q('#notes')).value=item.notes||'';
+    currentWarnings=item.warnings||0; 
+    for(let i=0;i<=currentWarnings;i++) warnSelect.querySelector(`[data-v="${i}"]`)?.classList.add('active');
+
+    const meta = parseCopyMeta(item.notes || '');
+    copyLabelInput.value = meta.label;
+    copyValueInput.value = meta.value;
+    notesInput.value = meta.rest;
   }
   formDialog.showModal();
 };
@@ -517,7 +747,6 @@ document.addEventListener("paste",e=>{
 dropZone.addEventListener('drop', e=>{ const f=e.dataTransfer.files?.[0]; if(f) handleFile(f); });
 photoInput.onchange=()=>{ const f=photoInput.files?.[0]; if(f) handleFile(f); };
 function handleFile(file){ const fr=new FileReader(); fr.onload=()=>{photoPreview.src=fr.result}; fr.readAsDataURL(file); }
-const fileToDataUrl=f=>new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.onerror=rej;fr.readAsDataURL(f);});
 
 /* ====== رفع الصور تلقائياً إلى التخزين ثم حفظ السجل ====== */
 function dataUrlToBlob(d){
@@ -561,39 +790,42 @@ form.onsubmit=async e=>{
     photoUrl = data.publicUrl;
   }
 
- const obj = {
-  id,
-  name: nameInput.value.trim(),
-  nid: nidInput.value.trim(),
-  rank: rankSelect.value,
-  rank_no: parseInt(rankNoInput.value, 10) || 1,
-  photo: photoUrl || null,
-  health_role: healthRole.value || '',
-  specialty: specialty.value || '',
-  cert_heli: !!cert_heli.checked,
-  cert_ops: !!cert_ops.checked,
-  cert_diving: !!cert_diving.checked,
-  cert_boat: !!cert_boat.checked,
-  cert_fitness: !!cert_fitness.checked,
-  cert_med_report: !!cert_med_report.checked,
-  test_specialty: !!test_specialty.checked,
-  test_reports: !!test_reports.checked,
-  test_mountain: !!test_mountain.checked,
-  test_simulation: !!test_simulation.checked,
+  let notesText = (notesInput.value || '').trim();
+  const cl = copyLabelInput.value.trim();
+  const cv = copyValueInput.value.trim();
+  if(cl || cv){
+    const firstLine = `${cl || 'COPY ID'}:${cv || ''}`;
+    notesText = firstLine + (notesText ? '\n' + notesText : '');
+  }
 
+  const obj = {
+    id,
+    name: nameInput.value.trim(),
+    nid: nidInput.value.trim(),
+    rank: rankSelect.value,
+    rank_no: parseInt(rankNoInput.value, 10) || 1,
+    photo: photoUrl || null,
+    health_role: healthRole.value || '',
+    specialty: specialty.value || '',
+    cert_heli: !!cert_heli.checked,
+    cert_ops: !!cert_ops.checked,
+    cert_diving: !!cert_diving.checked,
+    cert_boat: !!cert_boat.checked,
+    cert_fitness: !!cert_fitness.checked,
+    cert_med_report: !!cert_med_report.checked,
+    test_specialty: !!test_specialty.checked,
+    test_reports: !!test_reports.checked,
+    test_mountain: !!test_mountain.checked,
+    test_simulation: !!test_simulation.checked,
+    warnings: currentWarnings,
+    notes: notesText
+  };
 
-  warnings: currentWarnings,
-  notes: (q('#notes')?.value || '').trim()
-};
+  const { error } = await sb.from('staff').upsert(obj);
+  if (error) { alert('فشل الحفظ: ' + error.message); return; }
 
-const { error } = await sb.from('staff').upsert(obj);
-if (error) { alert('فشل الحفظ: ' + error.message); return; }
-
-formDialog.close();
-await load();
-    reorderRank(obj.rank),
-    oldRank && oldRank!==obj.rank ? reorderRank(oldRank) : Promise.resolve()
-  ;
+  await reorderRank(obj.rank);
+  if (oldRank && oldRank!==obj.rank) await reorderRank(oldRank);
 
   formDialog.close();
   await load();
@@ -628,8 +860,3 @@ await load();
 </script>
 </body>
 </html>
-
-
-
-
-
