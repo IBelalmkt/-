@@ -162,6 +162,9 @@ nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(16,1
     delete: 'حذف'
   };
 
+  // المفاتيح اللي ما نبيها تظهر في الديفات
+  const IGNORE_DIFF_KEYS = ['updated_at'];
+
   const looksLikeImage = (v, key) => {
     if (key === 'photo' && typeof v === 'string') return true;
     if (typeof v !== 'string') return false;
@@ -202,11 +205,13 @@ nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(16,1
   }
 
   function card(row){
-    const diffs = Array.isArray(row.diffs) ? row.diffs : (row.diffs || []);
+    const diffsRaw = Array.isArray(row.diffs) ? row.diffs : (row.diffs || []);
+    // نستبعد updated_at من اللستة
+    const diffs = diffsRaw.filter(d => !IGNORE_DIFF_KEYS.includes(d.key));
+
     const count = diffs.length;
     const actor = row.actor_email || '—';
     const targetName = row.target_name || '—';
-    const targetId   = row.staff_id ? `#${row.staff_id}` : '';
 
     return `
       <article class="card" data-op="${row.op}">
@@ -220,10 +225,12 @@ nav{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(16,1
         <div class="target">
           <span class="badge">المستهدف</span>
           <b>${esc(targetName)}</b>
-          ${targetId ? `<span class="badge">${esc(targetId)}</span>` : ``}
         </div>
 
-        ${count?`<div class="diffs">${diffs.map(diffLine).join('')}</div>`:`<div class="msg"></div>`}
+        ${count
+          ? `<div class="diffs">${diffs.map(diffLine).join('')}</div>`
+          : `<div class="msg"></div>`
+        }
       </article>`;
   }
 
