@@ -12,11 +12,28 @@
   --cyan:#7fd8ff;
 }
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(1000px 500px at 20% -10%, rgba(139,123,255,.11), transparent), var(--bg); color:var(--text); font-family:"Cairo",sans-serif}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(1000px 500px at 20% -10%, rgba(139,123,255,.11), transparent),
+    radial-gradient(1100px 700px at 100% 120%, rgba(113,216,255,.10), transparent),
+    var(--bg);
+  color:var(--text);
+  font-family:"Cairo",sans-serif
+}
 .container{width:min(1200px,92%);margin:auto}
 
+/* scrollbar حديث */
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:#070512;}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,#8b7bff,#54e6a6);
+  border-radius:999px;
+}
+
 /* Intro */
-#intro{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0b0613 0%,#120c1f 70%);}
+#intro{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at top,#15102b 0,#070414 55%,#05030b 100%);}
 .intro-box{display:grid;place-items:center;gap:8px;text-align:center;animation:fadeUp .7s ease both}
 .intro-logo{width:110px;height:110px;border-radius:28px;background:url('RTHospital.png') center/cover no-repeat;box-shadow:0 10px 40px rgba(139,123,255,.35);animation:pulse 1.8s ease-in-out infinite}
 .intro-title{font-size:22px;font-weight:800}
@@ -27,11 +44,26 @@ body{margin:0;background:radial-gradient(1000px 500px at 20% -10%, rgba(139,123,
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filter:blur(10px);border-bottom:var(--border)}
-.nav-in{display:flex;align-items:center;gap:12px;padding:12px 0}
+nav{
+  position:sticky;top:0;z-index:30;
+  background:rgba(10,7,20,.86);
+  backdrop-filter:blur(16px);
+  border-bottom:var(--border);
+  box-shadow:0 10px 40px rgba(0,0,0,.45)
+}
+.nav-in{display:flex;align-items:center;gap:12px;padding:10px 0}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800}
-.brand .logo{width:34px;height:34px;border-radius:10px;background:url('RTHospital.png') center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.09) inset}
-.search{flex:1;display:flex;align-items:center;background:#17132c;border:var(--border);border-radius:12px;padding:8px 12px}
+.brand .logo{
+  width:34px;height:34px;border-radius:10px;
+  background:url('RTHospital.png') center/cover no-repeat;
+  box-shadow:0 0 0 1px rgba(255,255,255,.14) inset
+}
+.search{
+  flex:1;display:flex;align-items:center;
+  background:#17132c;border:var(--border);border-radius:12px;
+  padding:8px 12px;
+  box-shadow:0 0 0 1px rgba(139,123,255,.15)
+}
 .search input{all:unset;flex:1;color:var(--text);}
 .link-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#171230;color:#e9e9ff;text-decoration:none;font-weight:700;font-size:12px}
 .link-chip .ico{font-size:14px;opacity:.85}
@@ -45,35 +77,102 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 
 /* فلتر */
 .filter-wrap{position:relative}
-.filter-panel{position:absolute;right:0;top:42px;width:260px;background:#0f0b1a;border:var(--border);border-radius:14px;padding:10px;display:none;z-index:40}
+.filter-panel{
+  position:absolute;right:0;top:42px;width:260px;
+  background:#0f0b1a;border:var(--border);border-radius:14px;
+  padding:10px;display:none;z-index:40;
+  box-shadow:0 18px 40px rgba(0,0,0,.7)
+}
 .filter-panel.open{display:block}
 .filter-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
-.filter-row label{font-size:13px;color:#d6dcf3}
-.filter-row .count{font-size:12px;color:#9fb0c4;background:#15122a;border:1px solid rgba(255,255,255,.08);padding:2px 8px;border-radius:999px}
+.filter-panel label{
+  font-size:13px;color:#d6dcf3;
+  display:flex;flex-direction:row;align-items:center;gap:8px;
+}
+.filter-panel label input{order:-1}
+.filter-row .count{
+  font-size:12px;color:#9fb0c4;background:#15122a;
+  border:1px solid rgba(255,255,255,.08);
+  padding:2px 8px;border-radius:999px;min-width:28px;text-align:center
+}
 .filter-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
 
 /* ORGANIZATION GRID */
 .org{display:grid;gap:18px;margin:16px 0}
 .row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
 .row-A{justify-content:center;margin-top:6px}
-.row-A .card{transform:translateY(-8px)}
+.row-A .card{transform:translateY(-4px)}
 .row-V{justify-content:center}
 
 /* CARD */
-.card{position:relative;background:rgba(25,18,38,.6);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;width:260px;box-shadow:0 8px 28px rgba(139,92,246,.10)}
-.card .media{display:grid;place-items:center;padding:14px 0 6px}
-.card .avatar{width:88px;height:88px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.1);box-shadow:0 0 0 4px rgba(255,255,255,.05)}
-.card .content{padding:10px 12px;display:grid;gap:6px}
+.card{
+  position:relative;
+  background:rgba(25,18,38,.78);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  width:260px;
+  box-shadow:0 12px 32px rgba(5,3,15,.9);
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    border-color .18s ease,
+    background .18s ease;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:conic-gradient(from 220deg,rgba(139,123,255,.16),transparent,rgba(84,230,166,.14),transparent);
+  opacity:0;
+  transition:opacity .25s ease;
+}
+.card:hover{
+  transform:translateY(-4px) scale(1.02);
+  box-shadow:0 24px 50px rgba(0,0,0,.85);
+  border-color:rgba(143,130,255,.7);
+  background:
+    radial-gradient(circle at top,rgba(139,123,255,.10),transparent 55%),
+    rgba(11,8,26,.98);
+}
+.card:hover::before{opacity:1;}
+
+.card .media{display:grid;place-items:center;padding:16px 0 8px}
+.card .avatar{
+  width:88px;height:88px;border-radius:50%;
+  object-fit:cover;border:2px solid rgba(255,255,255,.15);
+  box-shadow:0 0 0 4px rgba(255,255,255,.06)
+}
+.card .content{padding:10px 12px 14px;display:grid;gap:6px;position:relative;z-index:1}
 .card .title{font-size:15px;font-weight:800}
 .card .meta{font-size:12px;color:#aeb6c7;display:grid;gap:2px}
 .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;line-height:1;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#cfd6e6}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;line-height:1;
+  padding:6px 10px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);color:#cfd6e6
+}
 .pill.heli{border-color:#ff6b6b;color:#ff9aa2;background:rgba(255,107,107,.12)}
-.rank-badge{position:absolute;inset:8px 8px auto auto;background:#281f4e;border:1px solid rgba(255,255,255,.12);color:#fff;padding:4px 8px;border-radius:999px;font-size:12px}
-.health-badge{position:absolute;inset:8px auto auto 8px;background:rgba(127,216,255,.14); color:#bfeaff;border:1px solid rgba(127,216,255,.35);padding:4px 8px;border-radius:999px;font-size:12px}
+.rank-badge{
+  position:absolute;inset:8px 8px auto auto;
+  background:linear-gradient(135deg,#312467,#1a133b);
+  border:1px solid rgba(255,255,255,.18);
+  color:#fff;padding:4px 8px;border-radius:999px;
+  font-size:12px;z-index:1
+}
+.health-badge{
+  position:absolute;inset:8px auto auto 8px;
+  background:rgba(127,216,255,.18);
+  color:#bfeaff;border:1px solid rgba(127,216,255,.4);
+  padding:4px 8px;border-radius:999px;font-size:12px;z-index:1
+}
 
 /* إنذارات */
-.warns{position:absolute;bottom:12px;left:12px;display:flex;gap:6px}
+.warns{position:absolute;bottom:12px;left:12px;display:flex;gap:6px;z-index:1}
 .warns .w{width:8px;height:8px;border-radius:50%;background:#3a3a50;border:1px solid rgba(255,255,255,.12)}
 .warns .w.active{background:#ff9aa9}
 
@@ -101,16 +200,14 @@ nav{position:sticky;top:0;z-index:30;background:rgba(15,11,26,.7);backdrop-filte
 
     <a class="link-chip" href="promotion.html"><span class="ico">⬈</span><span>متطلبات الترقية</span></a>
 
-    <div class="stat" id="statTotal"><span class="dot"></span><span>الإجمالي</span><small>— 0</small></div>
+    <div class="stat" id="statTotal"><span class="dot"></span><span>الإجمالي</span><small>0</small></div>
 
     <div class="filter-wrap">
-      <!-- زر بصورة setting.png -->
       <button id="openFilters" class="icon-btn" aria-label="فلترة">
         <img src="setting.png" alt="فلترة">
       </button>
 
       <div class="filter-panel" id="filterPanel">
-        <!-- مبدئيًا غير محدد؛ العرض سيكون الكل إذا لم تُحدَّد أي رتبة -->
         <div class="filter-row"><label><input type="checkbox" data-r="A"> مسؤول</label><span class="count" id="cntA">0</span></div>
         <div class="filter-row"><label><input type="checkbox" data-r="V"> نائب</label><span class="count" id="cntV">0</span></div>
         <div class="filter-row"><label><input type="checkbox" data-r="AD"> استشاري</label><span class="count" id="cntAD">0</span></div>
@@ -154,7 +251,6 @@ const rankOrder=['A','V','AD','DS','D','DA','N','T','C'];
 const rankLabel=r=>({A:'مسؤول',V:'نائب',AD:'استشاري',DS:'أخصائي',D:'دكتور',DA:'مساعد دكتور',N:'ممرض',T:'متدرب',C:'متطوع'})[r]||r;
 
 let ALL=[]; 
-// مبدئيًا نعرض الكل (حتى لو الشيكبوكس غير محدد)
 let STATE={ ranks:new Set(rankOrder), q:'' };
 
 const openFilters = document.getElementById('openFilters');
@@ -175,7 +271,7 @@ const certList=x=>{
   if(x.test_specialty) a.push({t:'اختبار بالتخصص'});
   if(x.test_reports) a.push({t:'اختبارات تقارير'});
   if(x.test_mountain) a.push({t:'اختبار الجبال'});
-  if(x.test_simulation) a.push({t:'اختبار محاكاة'}); /* ← الإضافة الوحيدة */
+  if(x.test_simulation) a.push({t:'اختبار محاكاة'});
   return a;
 };
 
@@ -209,7 +305,6 @@ function countByRank(data){
 function render(){
   const q=STATE.q.trim().toLowerCase();
   let list=ALL.filter(x=>{
-    // لو ما في تحديد -> نعرض الكل
     const okRank = STATE.ranks.size ? STATE.ranks.has(x.rank) : true;
     const okQ=!q || x.name?.toLowerCase().includes(q) || x.nid?.includes(q);
     return okRank && okQ;
@@ -224,7 +319,7 @@ function render(){
     <div class="row row-V">${groups.V.map(cardHTML).join('')}</div>
     ${['AD','DS','D','DA','N','T','C'].map(r=>`<div class="row row-${r}">${groups[r].map(cardHTML).join('')}</div>`).join('')}
   `;
-  statTotal.querySelector('small').textContent=` ${list.length}`;
+  statTotal.querySelector('small').textContent = list.length;
 
   const counts = countByRank(ALL);
   for(const r of rankOrder){
@@ -240,29 +335,24 @@ async function load(){
 }
 statTotal.onclick=load;
 
-/* Filters + search */
-document.getElementById('searchInput').oninput=()=>{STATE.q=searchInput.value;render();};
+searchInput.oninput=()=>{STATE.q=searchInput.value;render();};
 
-/* فتح/إغلاق اللوحة */
 openFilters.onclick=(e)=>{ e.stopPropagation(); filterPanel.classList.toggle('open'); };
 
-/* تطبيق: ما نقفل اللوحة */
 applyFilters.onclick=()=>{
   const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
   const selected = Array.from(checks).filter(c=>c.checked).map(c=>c.getAttribute('data-r'));
-  STATE.ranks = new Set(selected.length ? selected : []); // فاضي => عرض الكل
+  STATE.ranks = new Set(selected.length ? selected : []);
   render();
 };
 
-/* مسح: إلغاء كل التحديد وإبقاء العرض (كل) */
 resetFilters.onclick=()=>{
   const checks = filterPanel.querySelectorAll('input[type="checkbox"][data-r]');
   checks.forEach(c=>c.checked=false);
-  STATE.ranks = new Set(); // فارغ => عرض الكل
+  STATE.ranks = new Set();
   render();
 };
 
-/* إغلاق عند الضغط خارج البطاقة */
 document.addEventListener('click', (e)=>{
   const withinPanel = filterPanel.contains(e.target);
   const onButton = openFilters.contains(e.target);
